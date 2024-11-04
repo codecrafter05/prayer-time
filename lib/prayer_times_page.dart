@@ -1,7 +1,10 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:intl/intl.dart';
+import 'styles.dart';
+import 'prayer_time_row.dart';
 
 class PrayerTimesPage extends StatefulWidget {
   @override
@@ -15,12 +18,46 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
   String? hijriDate;
   Duration? timeUntilNextPrayer;
   String? nextPrayerName;
+  Timer? countdownTimer;
+
+  // قواميس الترجمة من الإنجليزية إلى العربية
+  final Map<String, String> englishToArabicMonths = {
+    'January': 'يناير',
+    'February': 'فبراير',
+    'March': 'مارس',
+    'April': 'أبريل',
+    'May': 'مايو',
+    'June': 'يونيو',
+    'July': 'يوليو',
+    'August': 'أغسطس',
+    'September': 'سبتمبر',
+    'October': 'أكتوبر',
+    'November': 'نوفمبر',
+    'December': 'ديسمبر',
+  };
+
+  final Map<String, String> englishToArabicDays = {
+    'Sunday': 'الأحد',
+    'Monday': 'الإثنين',
+    'Tuesday': 'الثلاثاء',
+    'Wednesday': 'الأربعاء',
+    'Thursday': 'الخميس',
+    'Friday': 'الجمعة',
+    'Saturday': 'السبت',
+  };
 
   @override
   void initState() {
     super.initState();
     loadPrayerTimes();
     calculateTimeUntilNextPrayer();
+    startCountdown();
+  }
+
+  @override
+  void dispose() {
+    countdownTimer?.cancel();
+    super.dispose();
   }
 
   Future<void> loadPrayerTimes() async {
@@ -28,17 +65,24 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
     Map<String, dynamic> jsonData = json.decode(jsonString);
 
     int currentDay = DateTime.now().day;
-    String currentMonth = DateFormat('MMMM').format(DateTime.now());
+    String currentMonthEnglish = DateFormat('MMMM').format(DateTime.now());
+    String currentDayOfWeekEnglish = DateFormat('EEEE').format(DateTime.now());
     int currentYear = DateTime.now().year;
+
+    // ترجمة الشهر واليوم من الإنجليزية إلى العربية
+    String currentMonth =
+        englishToArabicMonths[currentMonthEnglish] ?? currentMonthEnglish;
+    String currentDayOfWeek =
+        englishToArabicDays[currentDayOfWeekEnglish] ?? currentDayOfWeekEnglish;
 
     List<dynamic> sheetData = jsonData["Sheet 2"];
 
     var today = sheetData.firstWhere(
       (item) =>
           item['gregorian_day'] == currentDay &&
-          item['gregorian_month'].toString().toLowerCase() ==
-              currentMonth.toLowerCase() &&
-          item['gregorian_year'] == currentYear,
+          item['gregorian_month'] == currentMonth &&
+          item['gregorian_year'] == currentYear &&
+          item['day_of_week'] == currentDayOfWeek,
       orElse: () => null,
     );
 
@@ -68,6 +112,8 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
       ];
 
       DateTime now = DateTime.now();
+      bool foundNextPrayer = false;
+
       for (int i = 0; i < prayerTimes.length; i++) {
         List<String> timeParts = prayerTimes[i].split(':');
         DateTime prayerTime = DateTime(
@@ -83,89 +129,132 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
             timeUntilNextPrayer = prayerTime.difference(now);
             nextPrayerName = prayerNames[i];
           });
+          foundNextPrayer = true;
           break;
         }
       }
+
+      // إذا لم يتم العثور على صلاة قادمة لهذا اليوم، اضبط العد التنازلي لصلاة الفجر في اليوم التالي
+      if (!foundNextPrayer) {
+        DateTime nextFajrTime = DateTime(
+          now.year,
+          now.month,
+          now.day + 1,
+          int.parse(prayerTimes[0].split(':')[0]),
+          int.parse(prayerTimes[0].split(':')[1]),
+        );
+        setState(() {
+          timeUntilNextPrayer = nextFajrTime.difference(now);
+          nextPrayerName = prayerNames[0]; // الفجر
+        });
+      }
     }
+  }
+
+  void startCountdown() {
+    countdownTimer = Timer.periodic(Duration(seconds: 1), (timer) {
+      if (timeUntilNextPrayer != null && timeUntilNextPrayer!.inSeconds > 0) {
+        setState(() {
+          timeUntilNextPrayer = timeUntilNextPrayer! - Duration(seconds: 1);
+        });
+      } else {
+        timer.cancel();
+        // إعادة حساب الوقت للصلاة التالية والبدء من جديد
+        calculateTimeUntilNextPrayer();
+        startCountdown();
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueGrey[900],
+      backgroundColor: AppStyles.backgroundColor,
       appBar: AppBar(
         title: Text('مواقيت الصلاة'),
-        backgroundColor: Colors.blueGrey[800],
+        backgroundColor: AppStyles.backgroundColor,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            // التاريخ الميلادي والهجري
+            Container(
+              padding: EdgeInsets.all(12),
+              color: Colors.red,
+              child: Center(
+                child: Text(
+                  'مسجد الشيخ براهيم',
+                  style: TextStyle(
+                    fontSize: 24,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 20),
             Text(
               '${todayDay ?? ''} - $todayDate',
-              style: TextStyle(fontSize: 24, color: Colors.white),
+              style: AppStyles.dateTextStyle,
             ),
             Text(
               'الهجري: $hijriDate',
-              style: TextStyle(fontSize: 20, color: Colors.white70),
+              style: AppStyles.hijriDateTextStyle,
             ),
-            SizedBox(height: 8),
-            // عرض المناسبة إذا كانت موجودة
             if (todayData?['event'] != null)
               Text(
                 'المناسبة: ${todayData!['event']}',
-                style: TextStyle(fontSize: 18, color: Colors.lightBlueAccent),
+                style: AppStyles.eventTextStyle,
                 textAlign: TextAlign.center,
               ),
             SizedBox(height: 20),
-            // عرض الساعة الحالية
             Text(
               DateFormat('HH:mm').format(DateTime.now()),
-              style: TextStyle(
-                  fontSize: 50,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold),
+              style: AppStyles.timeTextStyle,
             ),
-            SizedBox(height: 10),
-            // الوقت المتبقي للصلاة القادمة
             if (timeUntilNextPrayer != null)
-              Text(
-                'الوقت المتبقي حتى ${nextPrayerName ?? ''}: ${timeUntilNextPrayer!.inHours}:${(timeUntilNextPrayer!.inMinutes % 60).toString().padLeft(2, '0')}',
-                style: TextStyle(fontSize: 18, color: Colors.amber),
+              Column(
+                children: [
+                  Text(
+                    'الوقت المتبقي حتى ${nextPrayerName ?? ''}',
+                    style: AppStyles.nextPrayerTextStyle,
+                  ),
+                  Text(
+                    '${timeUntilNextPrayer!.inHours.toString().padLeft(2, '0')}:${(timeUntilNextPrayer!.inMinutes % 60).toString().padLeft(2, '0')}:${(timeUntilNextPrayer!.inSeconds % 60).toString().padLeft(2, '0')}',
+                    style: TextStyle(
+                      fontSize: 32,
+                      color: Colors.amber,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
-            SizedBox(height: 30),
             Divider(color: Colors.white54),
-            SizedBox(height: 10),
-            // عرض أوقات الصلوات بشكل مستقيم بدون العصر والعشاء
-            prayerTimeRow(
-                'الفجر', todayData?['fajr_hour'], todayData?['fajr_minute']),
-            prayerTimeRow('الشروق', todayData?['sunrise_hour'],
-                todayData?['sunrise_minute']),
-            prayerTimeRow(
-                'الظهر', todayData?['dhuhr_hour'], todayData?['dhuhr_minute']),
-            prayerTimeRow('المغرب', todayData?['maghrib_hour'],
-                todayData?['maghrib_minute']),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                PrayerTimeColumn(
+                    prayer: 'المغرب',
+                    hour: todayData?['maghrib_hour']?.toString() ?? '',
+                    minute: todayData?['maghrib_minute']?.toString() ?? ''),
+                PrayerTimeColumn(
+                    prayer: 'الظهر',
+                    hour: todayData?['dhuhr_hour']?.toString() ?? '',
+                    minute: todayData?['dhuhr_minute']?.toString() ?? ''),
+                PrayerTimeColumn(
+                    prayer: 'الشروق',
+                    hour: todayData?['sunrise_hour']?.toString() ?? '',
+                    minute: todayData?['sunrise_minute']?.toString() ?? ''),
+                PrayerTimeColumn(
+                    prayer: 'الفجر',
+                    hour: todayData?['fajr_hour']?.toString() ?? '',
+                    minute: todayData?['fajr_minute']?.toString() ?? ''),
+              ],
+            ),
           ],
         ),
       ),
-    );
-  }
-
-  Widget prayerTimeRow(String prayer, dynamic hour, dynamic minute) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          '${hour.toString()}:${minute.toString()}',
-          style: TextStyle(fontSize: 22, color: Colors.white),
-        ),
-        Text(
-          prayer,
-          style: TextStyle(fontSize: 22, color: Colors.white),
-        ),
-      ],
     );
   }
 }
