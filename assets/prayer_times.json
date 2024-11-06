@@ -4,8 +4,8 @@
         "row_number": 2,
         "gregorian_month": "نوفمبر",
         "gregorian_year": 2024,
-        "day_of_week": "الإثنين",
-        "gregorian_day": 4,
+        "day_of_week": "الأربعاء",
+        "gregorian_day": 6,
         "hijri_month_name": "رجب",
         "hijri_year": 1446,
         "fajr_minute": "03",
@@ -14,11 +14,12 @@
         "sunrise_hour": "6",
         "dhuhr_minute": "41",
         "dhuhr_hour": "11",
-        "maghrib_minute": 14,
-        "maghrib_hour": 5,
+        "maghrib_minute": 44,
+        "maghrib_hour": "17",
         "event": " مولد الإمام محمد الباقر  (ع) ",
         "status": "صالحة"
     },
+    
  {
   "row_number": 2,
   "gregorian_month": "يناير",
@@ -34,7 +35,7 @@
   "dhuhr_minute": "41",
   "dhuhr_hour": "11",
   "maghrib_minute": 14,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "event": " مولد الإمام محمد الباقر  (ع) ",
   "status": "صالحة"
  },
@@ -53,7 +54,7 @@
   "dhuhr_minute": "42",
   "dhuhr_hour": "11",
   "maghrib_minute": 14,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "event": " مولد الإمام علي الهادي (ع) ",
   "status": "غير صالحة"
  },
@@ -72,7 +73,7 @@
   "dhuhr_minute": "42",
   "dhuhr_hour": "11",
   "maghrib_minute": 15,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "event": " شهادة الإمام علي الهادي (ع)",
   "status": "صالحة"
  },
@@ -91,7 +92,7 @@
   "dhuhr_minute": "43",
   "dhuhr_hour": "11",
   "maghrib_minute": 16,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -109,7 +110,7 @@
   "dhuhr_minute": "43",
   "dhuhr_hour": "11",
   "maghrib_minute": 16,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -127,7 +128,7 @@
   "dhuhr_minute": "44",
   "dhuhr_hour": "11",
   "maghrib_minute": 17,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -145,7 +146,7 @@
   "dhuhr_minute": "44",
   "dhuhr_hour": "11",
   "maghrib_minute": 18,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -163,7 +164,7 @@
   "dhuhr_minute": "44",
   "dhuhr_hour": "11",
   "maghrib_minute": 18,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -181,7 +182,7 @@
   "dhuhr_minute": "45",
   "dhuhr_hour": "11",
   "maghrib_minute": 19,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "event": " مولد عبدا... الرضيع بن الحسين (رض)",
   "status": "صالحة"
  },
@@ -200,7 +201,7 @@
   "dhuhr_minute": "45",
   "dhuhr_hour": "11",
   "maghrib_minute": 19,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "event": " مولد الإمام محمد الجواد (ع)",
   "status": "صالحة"
  },
@@ -219,7 +220,7 @@
   "dhuhr_minute": "46",
   "dhuhr_hour": "11",
   "maghrib_minute": 20,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -237,7 +238,7 @@
   "dhuhr_minute": "46",
   "dhuhr_hour": "11",
   "maghrib_minute": 21,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -255,7 +256,7 @@
   "dhuhr_minute": "46",
   "dhuhr_hour": "11",
   "maghrib_minute": 22,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "event": " مولد الإمام علي بن أبي طالب (ع)",
   "status": "صالحة"
  },
@@ -274,7 +275,7 @@
   "dhuhr_minute": "47",
   "dhuhr_hour": "11",
   "maghrib_minute": 22,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -292,7 +293,7 @@
   "dhuhr_minute": "47",
   "dhuhr_hour": "11",
   "maghrib_minute": 23,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "event": " وفاة السيدة زينب الكبرى بنت علي (ع) ",
   "status": "غير صالحة"
  },
@@ -311,7 +312,7 @@
   "dhuhr_minute": "47",
   "dhuhr_hour": "11",
   "maghrib_minute": 24,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -329,7 +330,7 @@
   "dhuhr_minute": "48",
   "dhuhr_hour": "11",
   "maghrib_minute": 25,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -347,7 +348,7 @@
   "dhuhr_minute": "48",
   "dhuhr_hour": "11",
   "maghrib_minute": 25,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "event": " ",
   "status": "صالحة"
  },
@@ -366,7 +367,7 @@
   "dhuhr_minute": "48",
   "dhuhr_hour": "11",
   "maghrib_minute": 26,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -384,7 +385,7 @@
   "dhuhr_minute": "49",
   "dhuhr_hour": "11",
   "maghrib_minute": 27,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -402,7 +403,7 @@
   "dhuhr_minute": "49",
   "dhuhr_hour": "11",
   "maghrib_minute": 28,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -420,7 +421,7 @@
   "dhuhr_minute": "49",
   "dhuhr_hour": "11",
   "maghrib_minute": 29,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -438,7 +439,7 @@
   "dhuhr_minute": "50",
   "dhuhr_hour": "11",
   "maghrib_minute": 29,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -456,7 +457,7 @@
   "dhuhr_minute": "50",
   "dhuhr_hour": "11",
   "maghrib_minute": 30,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -474,7 +475,7 @@
   "dhuhr_minute": "50",
   "dhuhr_hour": "11",
   "maghrib_minute": 31,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "event": " شهادة الإمام موسى الكاظم (ع) ",
   "status": "غير صالحة"
  },
@@ -493,7 +494,7 @@
   "dhuhr_minute": "50",
   "dhuhr_hour": "11",
   "maghrib_minute": 32,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "event": " وفاة مؤمن قريش أبي طالب عم الرسول (ص)",
   "status": "صالحة"
  },
@@ -512,7 +513,7 @@
   "dhuhr_minute": "50",
   "dhuhr_hour": "11",
   "maghrib_minute": 32,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "event": " عيد المبعث - ذكرى الإسراء والمعراج",
   "status": "صالحة"
  },
@@ -531,7 +532,7 @@
   "dhuhr_minute": "51",
   "dhuhr_hour": "11",
   "maghrib_minute": 33,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -549,7 +550,7 @@
   "dhuhr_minute": "51",
   "dhuhr_hour": "11",
   "maghrib_minute": 34,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -567,7 +568,7 @@
   "dhuhr_minute": "51",
   "dhuhr_hour": "11",
   "maghrib_minute": 35,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -585,7 +586,7 @@
   "dhuhr_minute": "51",
   "dhuhr_hour": "11",
   "maghrib_minute": 35,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -603,7 +604,7 @@
   "dhuhr_minute": "51",
   "dhuhr_hour": "11",
   "maghrib_minute": 36,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "event": " مولد الإمام الحسين بن علي (ع)",
   "status": "صالحة"
  },
@@ -622,7 +623,7 @@
   "dhuhr_minute": "51",
   "dhuhr_hour": "11",
   "maghrib_minute": 37,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "event": " مولد العباس بن علي (ع) ",
   "status": "غير صالحة"
  },
@@ -641,7 +642,7 @@
   "dhuhr_minute": "52",
   "dhuhr_hour": "11",
   "maghrib_minute": 38,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "event": " مولد الإمام علي بن الحسين زين العابدين (ع) ",
   "status": "صالحة"
  },
@@ -660,7 +661,7 @@
   "dhuhr_minute": "52",
   "dhuhr_hour": "11",
   "maghrib_minute": 38,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -678,7 +679,7 @@
   "dhuhr_minute": "52",
   "dhuhr_hour": "11",
   "maghrib_minute": 39,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -696,7 +697,7 @@
   "dhuhr_minute": "52",
   "dhuhr_hour": "11",
   "maghrib_minute": 39,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -714,7 +715,7 @@
   "dhuhr_minute": "52",
   "dhuhr_hour": "11",
   "maghrib_minute": 40,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -732,7 +733,7 @@
   "dhuhr_minute": "52",
   "dhuhr_hour": "11",
   "maghrib_minute": 41,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -750,7 +751,7 @@
   "dhuhr_minute": "52",
   "dhuhr_hour": "11",
   "maghrib_minute": 41,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "event": " مولدعلي الأكبر (ع)",
   "status": "صالحة"
  },
@@ -769,7 +770,7 @@
   "dhuhr_minute": "52",
   "dhuhr_hour": "11",
   "maghrib_minute": 42,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -787,7 +788,7 @@
   "dhuhr_minute": "52",
   "dhuhr_hour": "11",
   "maghrib_minute": 43,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -805,7 +806,7 @@
   "dhuhr_minute": "52",
   "dhuhr_hour": "11",
   "maghrib_minute": 43,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "event": " ",
   "status": "صالحة"
  },
@@ -824,7 +825,7 @@
   "dhuhr_minute": "52",
   "dhuhr_hour": "11",
   "maghrib_minute": 44,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "event": " مولد الإمام الحجة - عجل الله فرجه",
   "status": "غير صالحة"
  },
@@ -843,7 +844,7 @@
   "dhuhr_minute": "52",
   "dhuhr_hour": "11",
   "maghrib_minute": 45,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -861,7 +862,7 @@
   "dhuhr_minute": "52",
   "dhuhr_hour": "11",
   "maghrib_minute": 45,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -879,7 +880,7 @@
   "dhuhr_minute": "52",
   "dhuhr_hour": "11",
   "maghrib_minute": 46,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -897,7 +898,7 @@
   "dhuhr_minute": "52",
   "dhuhr_hour": "11",
   "maghrib_minute": 47,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -915,7 +916,7 @@
   "dhuhr_minute": "52",
   "dhuhr_hour": "11",
   "maghrib_minute": 47,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -933,7 +934,7 @@
   "dhuhr_minute": "51",
   "dhuhr_hour": "11",
   "maghrib_minute": 48,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -951,7 +952,7 @@
   "dhuhr_minute": "51",
   "dhuhr_hour": "11",
   "maghrib_minute": 49,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -969,7 +970,7 @@
   "dhuhr_minute": "51",
   "dhuhr_hour": "11",
   "maghrib_minute": 49,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -987,7 +988,7 @@
   "dhuhr_minute": "51",
   "dhuhr_hour": "11",
   "maghrib_minute": 50,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -1005,7 +1006,7 @@
   "dhuhr_minute": "51",
   "dhuhr_hour": "11",
   "maghrib_minute": 51,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -1023,7 +1024,7 @@
   "dhuhr_minute": "51",
   "dhuhr_hour": "11",
   "maghrib_minute": 51,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -1041,7 +1042,7 @@
   "dhuhr_minute": "51",
   "dhuhr_hour": "11",
   "maghrib_minute": 52,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -1059,7 +1060,7 @@
   "dhuhr_minute": "51",
   "dhuhr_hour": "11",
   "maghrib_minute": 52,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -1077,7 +1078,7 @@
   "dhuhr_minute": "50",
   "dhuhr_hour": "11",
   "maghrib_minute": 53,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -1095,7 +1096,7 @@
   "dhuhr_minute": "50",
   "dhuhr_hour": "11",
   "maghrib_minute": 54,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -1113,7 +1114,7 @@
   "dhuhr_minute": "50",
   "dhuhr_hour": "11",
   "maghrib_minute": 55,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -1131,7 +1132,7 @@
   "dhuhr_minute": "50",
   "dhuhr_hour": "11",
   "maghrib_minute": 55,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -1149,7 +1150,7 @@
   "dhuhr_minute": "50",
   "dhuhr_hour": "11",
   "maghrib_minute": 56,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -1167,7 +1168,7 @@
   "dhuhr_minute": "50",
   "dhuhr_hour": "11",
   "maghrib_minute": 56,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -1185,7 +1186,7 @@
   "dhuhr_minute": "49",
   "dhuhr_hour": "11",
   "maghrib_minute": 57,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -1203,7 +1204,7 @@
   "dhuhr_minute": "49",
   "dhuhr_hour": "11",
   "maghrib_minute": 57,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -1221,7 +1222,7 @@
   "dhuhr_minute": "49",
   "dhuhr_hour": "11",
   "maghrib_minute": 58,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -1239,7 +1240,7 @@
   "dhuhr_minute": "49",
   "dhuhr_hour": "11",
   "maghrib_minute": 58,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -1257,7 +1258,7 @@
   "dhuhr_minute": "48",
   "dhuhr_hour": "11",
   "maghrib_minute": 59,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -1275,7 +1276,7 @@
   "dhuhr_minute": "48",
   "dhuhr_hour": "11",
   "maghrib_minute": 59,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "event": " وفاة السيدة خديجة الكبرى أم المؤمنين (ع) ",
   "status": "صالحة"
  },
@@ -1294,7 +1295,7 @@
   "dhuhr_minute": "48",
   "dhuhr_hour": "11",
   "maghrib_minute": 0,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -1312,7 +1313,7 @@
   "dhuhr_minute": "48",
   "dhuhr_hour": "11",
   "maghrib_minute": 0,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -1330,7 +1331,7 @@
   "dhuhr_minute": "47",
   "dhuhr_hour": "11",
   "maghrib_minute": 1,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -1348,7 +1349,7 @@
   "dhuhr_minute": "47",
   "dhuhr_hour": "11",
   "maghrib_minute": 1,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -1366,7 +1367,7 @@
   "dhuhr_minute": "47",
   "dhuhr_hour": "11",
   "maghrib_minute": 2,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "event": " مولد الإمام الحسن بن علي المجتبى (ع)",
   "status": "غير صالحة"
  },
@@ -1385,7 +1386,7 @@
   "dhuhr_minute": "47",
   "dhuhr_hour": "11",
   "maghrib_minute": 3,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -1403,7 +1404,7 @@
   "dhuhr_minute": "46",
   "dhuhr_hour": "11",
   "maghrib_minute": 3,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -1421,7 +1422,7 @@
   "dhuhr_minute": "46",
   "dhuhr_hour": "11",
   "maghrib_minute": 4,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -1439,7 +1440,7 @@
   "dhuhr_minute": "46",
   "dhuhr_hour": "11",
   "maghrib_minute": 4,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "event": " ضربة ابن ملجم لعلي (ع) - ليلة القدر",
   "status": "غير صالحة"
  },
@@ -1458,7 +1459,7 @@
   "dhuhr_minute": "45",
   "dhuhr_hour": "11",
   "maghrib_minute": 4,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -1476,7 +1477,7 @@
   "dhuhr_minute": "45",
   "dhuhr_hour": "11",
   "maghrib_minute": 4,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "event": " شهادة الإمام علي بن أبي طالب (ع) - ليلة القدر",
   "status": "صالحة"
  },
@@ -1495,7 +1496,7 @@
   "dhuhr_minute": "45",
   "dhuhr_hour": "11",
   "maghrib_minute": 5,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -1513,7 +1514,7 @@
   "dhuhr_minute": "45",
   "dhuhr_hour": "11",
   "maghrib_minute": 5,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "event": "ليلة  القدر الشريفة - نزول القرآن الكريم",
   "status": "غير صالحة"
  },
@@ -1532,7 +1533,7 @@
   "dhuhr_minute": "44",
   "dhuhr_hour": "11",
   "maghrib_minute": 6,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -1550,7 +1551,7 @@
   "dhuhr_minute": "44",
   "dhuhr_hour": "11",
   "maghrib_minute": 6,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -1568,7 +1569,7 @@
   "dhuhr_minute": "44",
   "dhuhr_hour": "11",
   "maghrib_minute": 7,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -1586,7 +1587,7 @@
   "dhuhr_minute": "43",
   "dhuhr_hour": "11",
   "maghrib_minute": 7,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "event": "يوم القدس العالمي",
   "status": "صالحة"
  },
@@ -1605,7 +1606,7 @@
   "dhuhr_minute": "43",
   "dhuhr_hour": "11",
   "maghrib_minute": 8,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -1623,7 +1624,7 @@
   "dhuhr_minute": "43",
   "dhuhr_hour": "11",
   "maghrib_minute": 8,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -1641,7 +1642,7 @@
   "dhuhr_minute": "42",
   "dhuhr_hour": "11",
   "maghrib_minute": 9,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "event": "عيد الفطر المبارك - كل عام وأنتم بخير",
   "status": "غير صالحة"
  },
@@ -1660,7 +1661,7 @@
   "dhuhr_minute": "42",
   "dhuhr_hour": "11",
   "maghrib_minute": 9,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -1678,7 +1679,7 @@
   "dhuhr_minute": "42",
   "dhuhr_hour": "11",
   "maghrib_minute": 10,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -1696,7 +1697,7 @@
   "dhuhr_minute": "42",
   "dhuhr_hour": "11",
   "maghrib_minute": 10,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -1714,7 +1715,7 @@
   "dhuhr_minute": "41",
   "dhuhr_hour": "11",
   "maghrib_minute": 11,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -1732,7 +1733,7 @@
   "dhuhr_minute": "41",
   "dhuhr_hour": "11",
   "maghrib_minute": 11,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -1750,7 +1751,7 @@
   "dhuhr_minute": "41",
   "dhuhr_hour": "11",
   "maghrib_minute": 12,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -1768,7 +1769,7 @@
   "dhuhr_minute": "40",
   "dhuhr_hour": "11",
   "maghrib_minute": 12,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -1786,7 +1787,7 @@
   "dhuhr_minute": "40",
   "dhuhr_hour": "11",
   "maghrib_minute": 12,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -1804,7 +1805,7 @@
   "dhuhr_minute": "40",
   "dhuhr_hour": "11",
   "maghrib_minute": 13,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -1822,7 +1823,7 @@
   "dhuhr_minute": "40",
   "dhuhr_hour": "11",
   "maghrib_minute": 13,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -1840,7 +1841,7 @@
   "dhuhr_minute": "39",
   "dhuhr_hour": "11",
   "maghrib_minute": 14,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -1858,7 +1859,7 @@
   "dhuhr_minute": "39",
   "dhuhr_hour": "11",
   "maghrib_minute": 14,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -1876,7 +1877,7 @@
   "dhuhr_minute": "39",
   "dhuhr_hour": "11",
   "maghrib_minute": 15,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -1894,7 +1895,7 @@
   "dhuhr_minute": "38",
   "dhuhr_hour": "11",
   "maghrib_minute": 15,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "event": " شهادة حمزة بن عبد المطلب (ع)",
   "status": "غير صالحة"
  },
@@ -1913,7 +1914,7 @@
   "dhuhr_minute": "38",
   "dhuhr_hour": "11",
   "maghrib_minute": 16,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -1931,7 +1932,7 @@
   "dhuhr_minute": "38",
   "dhuhr_hour": "11",
   "maghrib_minute": 16,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -1949,7 +1950,7 @@
   "dhuhr_minute": "38",
   "dhuhr_hour": "11",
   "maghrib_minute": 17,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -1967,7 +1968,7 @@
   "dhuhr_minute": "38",
   "dhuhr_hour": "11",
   "maghrib_minute": 17,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -1985,7 +1986,7 @@
   "dhuhr_minute": "37",
   "dhuhr_hour": "11",
   "maghrib_minute": 18,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -2003,7 +2004,7 @@
   "dhuhr_minute": "37",
   "dhuhr_hour": "11",
   "maghrib_minute": 18,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -2021,7 +2022,7 @@
   "dhuhr_minute": "37",
   "dhuhr_hour": "11",
   "maghrib_minute": 19,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -2039,7 +2040,7 @@
   "dhuhr_minute": "37",
   "dhuhr_hour": "11",
   "maghrib_minute": 19,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -2057,7 +2058,7 @@
   "dhuhr_minute": "36",
   "dhuhr_hour": "11",
   "maghrib_minute": 20,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -2075,7 +2076,7 @@
   "dhuhr_minute": "36",
   "dhuhr_hour": "11",
   "maghrib_minute": 20,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "event": " شهادة الإمام جعفر الصادق (ع)",
   "status": "غير صالحة"
  },
@@ -2094,7 +2095,7 @@
   "dhuhr_minute": "36",
   "dhuhr_hour": "11",
   "maghrib_minute": 22,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -2112,7 +2113,7 @@
   "dhuhr_minute": "36",
   "dhuhr_hour": "11",
   "maghrib_minute": 22,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -2130,7 +2131,7 @@
   "dhuhr_minute": "36",
   "dhuhr_hour": "11",
   "maghrib_minute": 23,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -2148,7 +2149,7 @@
   "dhuhr_minute": "36",
   "dhuhr_hour": "11",
   "maghrib_minute": 23,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -2166,7 +2167,7 @@
   "dhuhr_minute": "35",
   "dhuhr_hour": "11",
   "maghrib_minute": 24,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "event": " مولد السيدة فاطمة المعصومة (ع)",
   "status": "صالحة"
  },
@@ -2185,7 +2186,7 @@
   "dhuhr_minute": "35",
   "dhuhr_hour": "11",
   "maghrib_minute": 24,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -2203,7 +2204,7 @@
   "dhuhr_minute": "35",
   "dhuhr_hour": "11",
   "maghrib_minute": 25,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "event": "عيد العمال",
   "status": "صالحة"
  },
@@ -2222,7 +2223,7 @@
   "dhuhr_minute": "35",
   "dhuhr_hour": "11",
   "maghrib_minute": 25,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -2240,7 +2241,7 @@
   "dhuhr_minute": "35",
   "dhuhr_hour": "11",
   "maghrib_minute": 26,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -2258,7 +2259,7 @@
   "dhuhr_minute": "35",
   "dhuhr_hour": "11",
   "maghrib_minute": 26,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -2276,7 +2277,7 @@
   "dhuhr_minute": "35",
   "dhuhr_hour": "11",
   "maghrib_minute": 27,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -2294,7 +2295,7 @@
   "dhuhr_minute": "35",
   "dhuhr_hour": "11",
   "maghrib_minute": 27,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -2312,7 +2313,7 @@
   "dhuhr_minute": "34",
   "dhuhr_hour": "11",
   "maghrib_minute": 28,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -2330,7 +2331,7 @@
   "dhuhr_minute": "34",
   "dhuhr_hour": "11",
   "maghrib_minute": 28,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -2348,7 +2349,7 @@
   "dhuhr_minute": "34",
   "dhuhr_hour": "11",
   "maghrib_minute": 29,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "event": " مولد الإمام علي بن موسى الرضا (ع) ",
   "status": "صالحة"
  },
@@ -2367,7 +2368,7 @@
   "dhuhr_minute": "34",
   "dhuhr_hour": "11",
   "maghrib_minute": 30,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -2385,7 +2386,7 @@
   "dhuhr_minute": "34",
   "dhuhr_hour": "11",
   "maghrib_minute": 30,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -2403,7 +2404,7 @@
   "dhuhr_minute": "34",
   "dhuhr_hour": "11",
   "maghrib_minute": 31,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -2421,7 +2422,7 @@
   "dhuhr_minute": "34",
   "dhuhr_hour": "11",
   "maghrib_minute": 31,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -2439,7 +2440,7 @@
   "dhuhr_minute": "34",
   "dhuhr_hour": "11",
   "maghrib_minute": 32,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -2457,7 +2458,7 @@
   "dhuhr_minute": "34",
   "dhuhr_hour": "11",
   "maghrib_minute": 33,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -2475,7 +2476,7 @@
   "dhuhr_minute": "34",
   "dhuhr_hour": "11",
   "maghrib_minute": 33,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -2493,7 +2494,7 @@
   "dhuhr_minute": "34",
   "dhuhr_hour": "11",
   "maghrib_minute": 34,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -2511,7 +2512,7 @@
   "dhuhr_minute": "34",
   "dhuhr_hour": "11",
   "maghrib_minute": 35,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -2529,7 +2530,7 @@
   "dhuhr_minute": "34",
   "dhuhr_hour": "11",
   "maghrib_minute": 35,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -2547,7 +2548,7 @@
   "dhuhr_minute": "34",
   "dhuhr_hour": "11",
   "maghrib_minute": 36,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -2565,7 +2566,7 @@
   "dhuhr_minute": "34",
   "dhuhr_hour": "11",
   "maghrib_minute": 36,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -2583,7 +2584,7 @@
   "dhuhr_minute": "34",
   "dhuhr_hour": "11",
   "maghrib_minute": 37,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -2601,7 +2602,7 @@
   "dhuhr_minute": "34",
   "dhuhr_hour": "11",
   "maghrib_minute": 37,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -2619,7 +2620,7 @@
   "dhuhr_minute": "34",
   "dhuhr_hour": "11",
   "maghrib_minute": 38,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -2637,7 +2638,7 @@
   "dhuhr_minute": "34",
   "dhuhr_hour": "11",
   "maghrib_minute": 38,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -2655,7 +2656,7 @@
   "dhuhr_minute": "35",
   "dhuhr_hour": "11",
   "maghrib_minute": 39,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -2673,7 +2674,7 @@
   "dhuhr_minute": "35",
   "dhuhr_hour": "11",
   "maghrib_minute": 39,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -2691,7 +2692,7 @@
   "dhuhr_minute": "35",
   "dhuhr_hour": "11",
   "maghrib_minute": 40,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "event": " وفاة الإمام محمد الجواد (ع)",
   "status": "غير صالحة"
  },
@@ -2710,7 +2711,7 @@
   "dhuhr_minute": "35",
   "dhuhr_hour": "11",
   "maghrib_minute": 40,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -2728,7 +2729,7 @@
   "dhuhr_minute": "35",
   "dhuhr_hour": "11",
   "maghrib_minute": 41,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -2746,7 +2747,7 @@
   "dhuhr_minute": "35",
   "dhuhr_hour": "11",
   "maghrib_minute": 41,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -2764,7 +2765,7 @@
   "dhuhr_minute": "35",
   "dhuhr_hour": "11",
   "maghrib_minute": 42,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -2782,7 +2783,7 @@
   "dhuhr_minute": "35",
   "dhuhr_hour": "11",
   "maghrib_minute": 42,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -2800,7 +2801,7 @@
   "dhuhr_minute": "36",
   "dhuhr_hour": "11",
   "maghrib_minute": 43,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -2818,7 +2819,7 @@
   "dhuhr_minute": "36",
   "dhuhr_hour": "11",
   "maghrib_minute": 43,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "event": " وفاة الإمام محمد الباقر (ع)",
   "status": "غير صالحة"
  },
@@ -2837,7 +2838,7 @@
   "dhuhr_minute": "36",
   "dhuhr_hour": "11",
   "maghrib_minute": 44,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "event": "يوم التروية",
   "status": "صالحة"
  },
@@ -2856,7 +2857,7 @@
   "dhuhr_minute": "36",
   "dhuhr_hour": "11",
   "maghrib_minute": 44,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "event": "الوقوف بعرفة  ",
   "status": "صالحة"
  },
@@ -2875,7 +2876,7 @@
   "dhuhr_minute": "36",
   "dhuhr_hour": "11",
   "maghrib_minute": 44,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "event": "عيد الأضحى المبارك - كل عام وأنتم بخير",
   "status": "صالحة"
  },
@@ -2894,7 +2895,7 @@
   "dhuhr_minute": "36",
   "dhuhr_hour": "11",
   "maghrib_minute": 45,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -2912,7 +2913,7 @@
   "dhuhr_minute": "37",
   "dhuhr_hour": "11",
   "maghrib_minute": 46,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -2930,7 +2931,7 @@
   "dhuhr_minute": "37",
   "dhuhr_hour": "11",
   "maghrib_minute": 46,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -2948,7 +2949,7 @@
   "dhuhr_minute": "37",
   "dhuhr_hour": "11",
   "maghrib_minute": 47,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -2966,7 +2967,7 @@
   "dhuhr_minute": "37",
   "dhuhr_hour": "11",
   "maghrib_minute": 47,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -2984,7 +2985,7 @@
   "dhuhr_minute": "37",
   "dhuhr_hour": "11",
   "maghrib_minute": 47,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -3002,7 +3003,7 @@
   "dhuhr_minute": "38",
   "dhuhr_hour": "11",
   "maghrib_minute": 48,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -3020,7 +3021,7 @@
   "dhuhr_minute": "38",
   "dhuhr_hour": "11",
   "maghrib_minute": 48,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "event": " عيد الغدير الأغر - كل عام وأنتم بخير",
   "status": "صالحة"
  },
@@ -3039,7 +3040,7 @@
   "dhuhr_minute": "38",
   "dhuhr_hour": "11",
   "maghrib_minute": 48,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -3057,7 +3058,7 @@
   "dhuhr_minute": "38",
   "dhuhr_hour": "11",
   "maghrib_minute": 49,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -3075,7 +3076,7 @@
   "dhuhr_minute": "38",
   "dhuhr_hour": "11",
   "maghrib_minute": 49,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -3093,7 +3094,7 @@
   "dhuhr_minute": "39",
   "dhuhr_hour": "11",
   "maghrib_minute": 49,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -3111,7 +3112,7 @@
   "dhuhr_minute": "39",
   "dhuhr_hour": "11",
   "maghrib_minute": 49,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -3129,7 +3130,7 @@
   "dhuhr_minute": "39",
   "dhuhr_hour": "11",
   "maghrib_minute": 50,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -3147,7 +3148,7 @@
   "dhuhr_minute": "39",
   "dhuhr_hour": "11",
   "maghrib_minute": 50,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -3165,7 +3166,7 @@
   "dhuhr_minute": "40",
   "dhuhr_hour": "11",
   "maghrib_minute": 50,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -3183,7 +3184,7 @@
   "dhuhr_minute": "40",
   "dhuhr_hour": "11",
   "maghrib_minute": 50,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -3201,7 +3202,7 @@
   "dhuhr_minute": "40",
   "dhuhr_hour": "11",
   "maghrib_minute": 51,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -3219,7 +3220,7 @@
   "dhuhr_minute": "40",
   "dhuhr_hour": "11",
   "maghrib_minute": 51,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -3237,7 +3238,7 @@
   "dhuhr_minute": "40",
   "dhuhr_hour": "11",
   "maghrib_minute": 51,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "event": " رأس السنة الهجرية القمرية 1447 هـ",
   "status": "صالحة"
  },
@@ -3256,7 +3257,7 @@
   "dhuhr_minute": "41",
   "dhuhr_hour": "11",
   "maghrib_minute": 51,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -3274,7 +3275,7 @@
   "dhuhr_minute": "41",
   "dhuhr_hour": "11",
   "maghrib_minute": 51,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -3292,7 +3293,7 @@
   "dhuhr_minute": "41",
   "dhuhr_hour": "11",
   "maghrib_minute": 51,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -3310,7 +3311,7 @@
   "dhuhr_minute": "41",
   "dhuhr_hour": "11",
   "maghrib_minute": 51,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -3328,7 +3329,7 @@
   "dhuhr_minute": "41",
   "dhuhr_hour": "11",
   "maghrib_minute": 51,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -3346,7 +3347,7 @@
   "dhuhr_minute": "42",
   "dhuhr_hour": "11",
   "maghrib_minute": 51,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -3364,7 +3365,7 @@
   "dhuhr_minute": "42",
   "dhuhr_hour": "11",
   "maghrib_minute": 50,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -3382,7 +3383,7 @@
   "dhuhr_minute": "42",
   "dhuhr_hour": "11",
   "maghrib_minute": 50,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "event": "تاسوعاء",
   "status": "صالحة"
  },
@@ -3401,7 +3402,7 @@
   "dhuhr_minute": "42",
   "dhuhr_hour": "11",
   "maghrib_minute": 50,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "event": "استشهاد الإمام الحسين (ع)",
   "status": "صالحة"
  },
@@ -3420,7 +3421,7 @@
   "dhuhr_minute": "42",
   "dhuhr_hour": "11",
   "maghrib_minute": 50,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -3438,7 +3439,7 @@
   "dhuhr_minute": "43",
   "dhuhr_hour": "11",
   "maghrib_minute": 50,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -3456,7 +3457,7 @@
   "dhuhr_minute": "43",
   "dhuhr_hour": "11",
   "maghrib_minute": 50,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -3474,7 +3475,7 @@
   "dhuhr_minute": "43",
   "dhuhr_hour": "11",
   "maghrib_minute": 50,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -3492,7 +3493,7 @@
   "dhuhr_minute": "43",
   "dhuhr_hour": "11",
   "maghrib_minute": 50,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -3510,7 +3511,7 @@
   "dhuhr_minute": "43",
   "dhuhr_hour": "11",
   "maghrib_minute": 49,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -3528,7 +3529,7 @@
   "dhuhr_minute": "43",
   "dhuhr_hour": "11",
   "maghrib_minute": 49,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -3546,7 +3547,7 @@
   "dhuhr_minute": "43",
   "dhuhr_hour": "11",
   "maghrib_minute": 49,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -3564,7 +3565,7 @@
   "dhuhr_minute": "43",
   "dhuhr_hour": "11",
   "maghrib_minute": 49,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -3582,7 +3583,7 @@
   "dhuhr_minute": "44",
   "dhuhr_hour": "11",
   "maghrib_minute": 48,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -3600,7 +3601,7 @@
   "dhuhr_minute": "44",
   "dhuhr_hour": "11",
   "maghrib_minute": 48,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -3618,7 +3619,7 @@
   "dhuhr_minute": "44",
   "dhuhr_hour": "11",
   "maghrib_minute": 48,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -3636,7 +3637,7 @@
   "dhuhr_minute": "44",
   "dhuhr_hour": "11",
   "maghrib_minute": 47,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -3654,7 +3655,7 @@
   "dhuhr_minute": "44",
   "dhuhr_hour": "11",
   "maghrib_minute": 47,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -3672,7 +3673,7 @@
   "dhuhr_minute": "44",
   "dhuhr_hour": "11",
   "maghrib_minute": 47,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "event": " شهادة الإمام علي بن الحسين زين العابدين (ع)",
   "status": "غير صالحة"
  },
@@ -3691,7 +3692,7 @@
   "dhuhr_minute": "44",
   "dhuhr_hour": "11",
   "maghrib_minute": 46,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -3709,7 +3710,7 @@
   "dhuhr_minute": "44",
   "dhuhr_hour": "11",
   "maghrib_minute": 46,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -3727,7 +3728,7 @@
   "dhuhr_minute": "44",
   "dhuhr_hour": "11",
   "maghrib_minute": 45,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -3745,7 +3746,7 @@
   "dhuhr_minute": "44",
   "dhuhr_hour": "11",
   "maghrib_minute": 45,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -3763,7 +3764,7 @@
   "dhuhr_minute": "44",
   "dhuhr_hour": "11",
   "maghrib_minute": 44,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -3781,7 +3782,7 @@
   "dhuhr_minute": "44",
   "dhuhr_hour": "11",
   "maghrib_minute": 44,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -3799,7 +3800,7 @@
   "dhuhr_minute": "44",
   "dhuhr_hour": "11",
   "maghrib_minute": 43,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -3817,7 +3818,7 @@
   "dhuhr_minute": "44",
   "dhuhr_hour": "11",
   "maghrib_minute": 42,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -3835,7 +3836,7 @@
   "dhuhr_minute": "44",
   "dhuhr_hour": "11",
   "maghrib_minute": 42,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "event": " وفاة السيدة رقية بنت الحسين (رض)",
   "status": "غير صالحة"
  },
@@ -3854,7 +3855,7 @@
   "dhuhr_minute": "44",
   "dhuhr_hour": "11",
   "maghrib_minute": 41,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -3872,7 +3873,7 @@
   "dhuhr_minute": "44",
   "dhuhr_hour": "11",
   "maghrib_minute": 40,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "event": "   شهادة الإمام الحسن المجتبى (ع) ",
   "status": "صالحة"
  },
@@ -3891,7 +3892,7 @@
   "dhuhr_minute": "44",
   "dhuhr_hour": "11",
   "maghrib_minute": 40,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -3909,7 +3910,7 @@
   "dhuhr_minute": "44",
   "dhuhr_hour": "11",
   "maghrib_minute": 39,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -3927,7 +3928,7 @@
   "dhuhr_minute": "44",
   "dhuhr_hour": "11",
   "maghrib_minute": 38,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -3945,7 +3946,7 @@
   "dhuhr_minute": "44",
   "dhuhr_hour": "11",
   "maghrib_minute": 38,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -3963,7 +3964,7 @@
   "dhuhr_minute": "44",
   "dhuhr_hour": "11",
   "maghrib_minute": 37,
-  "maghrib_hour": 6,
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -3981,7 +3982,7 @@
   "dhuhr_minute": "44",
   "dhuhr_hour": "11",
   "maghrib_minute": 36,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -3999,7 +4000,7 @@
   "dhuhr_minute": "44",
   "dhuhr_hour": "11",
   "maghrib_minute": 35,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -4017,7 +4018,7 @@
   "dhuhr_minute": "43",
   "dhuhr_hour": "11",
   "maghrib_minute": 35,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -4035,7 +4036,7 @@
   "dhuhr_minute": "43",
   "dhuhr_hour": "11",
   "maghrib_minute": 34,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -4053,7 +4054,7 @@
   "dhuhr_minute": "43",
   "dhuhr_hour": "11",
   "maghrib_minute": 33,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "event": " شهادة الإمام علي الرضا (ع) ",
   "status": "صالحة"
  },
@@ -4072,7 +4073,7 @@
   "dhuhr_minute": "43",
   "dhuhr_hour": "11",
   "maghrib_minute": 32,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -4090,7 +4091,7 @@
   "dhuhr_minute": "43",
   "dhuhr_hour": "11",
   "maghrib_minute": 31,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -4108,7 +4109,7 @@
   "dhuhr_minute": "43",
   "dhuhr_hour": "11",
   "maghrib_minute": 31,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "event": " أربعينية شهداء الطف (ع)",
   "status": "صالحة"
  },
@@ -4127,7 +4128,7 @@
   "dhuhr_minute": "43",
   "dhuhr_hour": "11",
   "maghrib_minute": 30,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -4145,7 +4146,7 @@
   "dhuhr_minute": "42",
   "dhuhr_hour": "11",
   "maghrib_minute": 29,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -4163,7 +4164,7 @@
   "dhuhr_minute": "42",
   "dhuhr_hour": "11",
   "maghrib_minute": 28,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -4181,7 +4182,7 @@
   "dhuhr_minute": "42",
   "dhuhr_hour": "11",
   "maghrib_minute": 27,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -4199,7 +4200,7 @@
   "dhuhr_minute": "42",
   "dhuhr_hour": "11",
   "maghrib_minute": 26,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -4217,7 +4218,7 @@
   "dhuhr_minute": "42",
   "dhuhr_hour": "11",
   "maghrib_minute": 25,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "event": " ",
   "status": "غير صالحة"
  },
@@ -4236,7 +4237,7 @@
   "dhuhr_minute": "41",
   "dhuhr_hour": "11",
   "maghrib_minute": 24,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -4254,7 +4255,7 @@
   "dhuhr_minute": "41",
   "dhuhr_hour": "11",
   "maghrib_minute": 23,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "event": " وفاة الرسول الأعظم محمد (ص) ",
   "status": "صالحة"
  },
@@ -4273,7 +4274,7 @@
   "dhuhr_minute": "41",
   "dhuhr_hour": "11",
   "maghrib_minute": 22,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -4291,7 +4292,7 @@
   "dhuhr_minute": "41",
   "dhuhr_hour": "11",
   "maghrib_minute": 21,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -4309,7 +4310,7 @@
   "dhuhr_minute": "40",
   "dhuhr_hour": "11",
   "maghrib_minute": 20,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -4327,7 +4328,7 @@
   "dhuhr_minute": "40",
   "dhuhr_hour": "11",
   "maghrib_minute": 19,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -4345,7 +4346,7 @@
   "dhuhr_minute": "40",
   "dhuhr_hour": "11",
   "maghrib_minute": 18,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -4363,7 +4364,7 @@
   "dhuhr_minute": "40",
   "dhuhr_hour": "11",
   "maghrib_minute": 17,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -4381,7 +4382,7 @@
   "dhuhr_minute": "39",
   "dhuhr_hour": "11",
   "maghrib_minute": 16,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -4399,7 +4400,7 @@
   "dhuhr_minute": "39",
   "dhuhr_hour": "11",
   "maghrib_minute": 15,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -4417,7 +4418,7 @@
   "dhuhr_minute": "39",
   "dhuhr_hour": "11",
   "maghrib_minute": 14,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -4435,7 +4436,7 @@
   "dhuhr_minute": "38",
   "dhuhr_hour": "11",
   "maghrib_minute": 13,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "event": "وفاة الإمام الحسن العسكري (ع)",
   "status": "صالحة"
  },
@@ -4454,7 +4455,7 @@
   "dhuhr_minute": "38",
   "dhuhr_hour": "11",
   "maghrib_minute": 12,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -4472,7 +4473,7 @@
   "dhuhr_minute": "38",
   "dhuhr_hour": "11",
   "maghrib_minute": 11,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -4490,7 +4491,7 @@
   "dhuhr_minute": "37",
   "dhuhr_hour": "11",
   "maghrib_minute": 9,
-  "maghrib_hour": "6",
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -4508,7 +4509,7 @@
   "dhuhr_minute": "37",
   "dhuhr_hour": "11",
   "maghrib_minute": 8,
-  "maghrib_hour": 6,
+  "maghrib_hour": "18",
   "event": " مولد الرسول الأكرم (ص) - أسبوع الوحدة الإسلامية ",
   "status": "صالحة"
  },
@@ -4527,7 +4528,7 @@
   "dhuhr_minute": "37",
   "dhuhr_hour": "11",
   "maghrib_minute": 7,
-  "maghrib_hour": 6,
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -4545,7 +4546,7 @@
   "dhuhr_minute": "36",
   "dhuhr_hour": "11",
   "maghrib_minute": 6,
-  "maghrib_hour": 6,
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -4563,7 +4564,7 @@
   "dhuhr_minute": "36",
   "dhuhr_hour": "11",
   "maghrib_minute": 5,
-  "maghrib_hour": 6,
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -4581,7 +4582,7 @@
   "dhuhr_minute": "36",
   "dhuhr_hour": "11",
   "maghrib_minute": 4,
-  "maghrib_hour": 6,
+  "maghrib_hour": "18",
   "status": "غير صالحة"
  },
  {
@@ -4599,7 +4600,7 @@
   "dhuhr_minute": "35",
   "dhuhr_hour": "11",
   "maghrib_minute": 3,
-  "maghrib_hour": 6,
+  "maghrib_hour": "18",
   "event": " مولد الرسول الأكرم (ص) و الإمام جعفر الصادق (ع)",
   "status": "صالحة"
  },
@@ -4618,7 +4619,7 @@
   "dhuhr_minute": "35",
   "dhuhr_hour": "11",
   "maghrib_minute": 2,
-  "maghrib_hour": 6,
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -4636,7 +4637,7 @@
   "dhuhr_minute": "35",
   "dhuhr_hour": "11",
   "maghrib_minute": 1,
-  "maghrib_hour": 6,
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -4654,7 +4655,7 @@
   "dhuhr_minute": "34",
   "dhuhr_hour": "11",
   "maghrib_minute": 0,
-  "maghrib_hour": 6,
+  "maghrib_hour": "18",
   "status": "صالحة"
  },
  {
@@ -4672,7 +4673,7 @@
   "dhuhr_minute": "34",
   "dhuhr_hour": "11",
   "maghrib_minute": 58,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -4690,7 +4691,7 @@
   "dhuhr_minute": "34",
   "dhuhr_hour": "11",
   "maghrib_minute": 57,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -4708,7 +4709,7 @@
   "dhuhr_minute": "33",
   "dhuhr_hour": "11",
   "maghrib_minute": 56,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -4726,7 +4727,7 @@
   "dhuhr_minute": "33",
   "dhuhr_hour": "11",
   "maghrib_minute": 55,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -4744,7 +4745,7 @@
   "dhuhr_minute": "33",
   "dhuhr_hour": "11",
   "maghrib_minute": 54,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -4762,7 +4763,7 @@
   "dhuhr_minute": "32",
   "dhuhr_hour": "11",
   "maghrib_minute": 53,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -4780,7 +4781,7 @@
   "dhuhr_minute": "32",
   "dhuhr_hour": "11",
   "maghrib_minute": 52,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -4798,7 +4799,7 @@
   "dhuhr_minute": "32",
   "dhuhr_hour": "11",
   "maghrib_minute": 51,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -4816,7 +4817,7 @@
   "dhuhr_minute": "31",
   "dhuhr_hour": "11",
   "maghrib_minute": 49,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -4834,7 +4835,7 @@
   "dhuhr_minute": "30",
   "dhuhr_hour": "11",
   "maghrib_minute": 48,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -4852,7 +4853,7 @@
   "dhuhr_minute": "30",
   "dhuhr_hour": "11",
   "maghrib_minute": 47,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -4870,7 +4871,7 @@
   "dhuhr_minute": "30",
   "dhuhr_hour": "11",
   "maghrib_minute": 46,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -4888,7 +4889,7 @@
   "dhuhr_minute": "29",
   "dhuhr_hour": "11",
   "maghrib_minute": 45,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -4906,7 +4907,7 @@
   "dhuhr_minute": "29",
   "dhuhr_hour": "11",
   "maghrib_minute": 44,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -4924,7 +4925,7 @@
   "dhuhr_minute": "29",
   "dhuhr_hour": "11",
   "maghrib_minute": 42,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -4942,7 +4943,7 @@
   "dhuhr_minute": "28",
   "dhuhr_hour": "11",
   "maghrib_minute": 41,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -4960,7 +4961,7 @@
   "dhuhr_minute": "28",
   "dhuhr_hour": "11",
   "maghrib_minute": 40,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -4978,7 +4979,7 @@
   "dhuhr_minute": "28",
   "dhuhr_hour": "11",
   "maghrib_minute": 39,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "event": " مولد الإمام الحسن العسكري (ع)",
   "status": "صالحة"
  },
@@ -4997,7 +4998,7 @@
   "dhuhr_minute": "27",
   "dhuhr_hour": "11",
   "maghrib_minute": 38,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -5015,7 +5016,7 @@
   "dhuhr_minute": "27",
   "dhuhr_hour": "11",
   "maghrib_minute": 37,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "event": " وفاة السيدة فاطمة بنت الإمام الكاظم (ع) ",
   "status": "صالحة"
  },
@@ -5034,7 +5035,7 @@
   "dhuhr_minute": "27",
   "dhuhr_hour": "11",
   "maghrib_minute": 36,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -5052,7 +5053,7 @@
   "dhuhr_minute": "26",
   "dhuhr_hour": "11",
   "maghrib_minute": 35,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -5070,7 +5071,7 @@
   "dhuhr_minute": "26",
   "dhuhr_hour": "11",
   "maghrib_minute": 34,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -5088,7 +5089,7 @@
   "dhuhr_minute": "26",
   "dhuhr_hour": "11",
   "maghrib_minute": 33,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -5106,7 +5107,7 @@
   "dhuhr_minute": "26",
   "dhuhr_hour": "11",
   "maghrib_minute": 32,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -5124,7 +5125,7 @@
   "dhuhr_minute": "25",
   "dhuhr_hour": "11",
   "maghrib_minute": 31,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -5142,7 +5143,7 @@
   "dhuhr_minute": "25",
   "dhuhr_hour": "11",
   "maghrib_minute": 30,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -5160,7 +5161,7 @@
   "dhuhr_minute": "25",
   "dhuhr_hour": "11",
   "maghrib_minute": 29,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -5178,7 +5179,7 @@
   "dhuhr_minute": "25",
   "dhuhr_hour": "11",
   "maghrib_minute": 28,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -5196,7 +5197,7 @@
   "dhuhr_minute": "24",
   "dhuhr_hour": "11",
   "maghrib_minute": 27,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -5214,7 +5215,7 @@
   "dhuhr_minute": "24",
   "dhuhr_hour": "11",
   "maghrib_minute": 26,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -5232,7 +5233,7 @@
   "dhuhr_minute": "24",
   "dhuhr_hour": "11",
   "maghrib_minute": 25,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -5250,7 +5251,7 @@
   "dhuhr_minute": "24",
   "dhuhr_hour": "11",
   "maghrib_minute": 24,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -5268,7 +5269,7 @@
   "dhuhr_minute": "23",
   "dhuhr_hour": "11",
   "maghrib_minute": 23,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -5286,7 +5287,7 @@
   "dhuhr_minute": "23",
   "dhuhr_hour": "11",
   "maghrib_minute": 22,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -5304,7 +5305,7 @@
   "dhuhr_minute": "23",
   "dhuhr_hour": "11",
   "maghrib_minute": 21,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -5322,7 +5323,7 @@
   "dhuhr_minute": "23",
   "dhuhr_hour": "11",
   "maghrib_minute": 20,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -5340,7 +5341,7 @@
   "dhuhr_minute": "23",
   "dhuhr_hour": "11",
   "maghrib_minute": 19,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -5358,7 +5359,7 @@
   "dhuhr_minute": "22",
   "dhuhr_hour": "11",
   "maghrib_minute": 18,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -5376,7 +5377,7 @@
   "dhuhr_minute": "22",
   "dhuhr_hour": "11",
   "maghrib_minute": 18,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -5394,7 +5395,7 @@
   "dhuhr_minute": "22",
   "dhuhr_hour": "11",
   "maghrib_minute": 17,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -5412,7 +5413,7 @@
   "dhuhr_minute": "22",
   "dhuhr_hour": "11",
   "maghrib_minute": 16,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -5430,7 +5431,7 @@
   "dhuhr_minute": "22",
   "dhuhr_hour": "11",
   "maghrib_minute": 15,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -5448,7 +5449,7 @@
   "dhuhr_minute": "22",
   "dhuhr_hour": "11",
   "maghrib_minute": 14,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -5466,7 +5467,7 @@
   "dhuhr_minute": "22",
   "dhuhr_hour": "11",
   "maghrib_minute": 13,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "event": " مولد السيدة زينب الكبرى (ع)",
   "status": "غير صالحة"
  },
@@ -5485,7 +5486,7 @@
   "dhuhr_minute": "22",
   "dhuhr_hour": "11",
   "maghrib_minute": 13,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -5503,7 +5504,7 @@
   "dhuhr_minute": "21",
   "dhuhr_hour": "11",
   "maghrib_minute": 12,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -5521,7 +5522,7 @@
   "dhuhr_minute": "21",
   "dhuhr_hour": "11",
   "maghrib_minute": 11,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -5539,7 +5540,7 @@
   "dhuhr_minute": "21",
   "dhuhr_hour": "11",
   "maghrib_minute": 11,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -5557,7 +5558,7 @@
   "dhuhr_minute": "21",
   "dhuhr_hour": "11",
   "maghrib_minute": 10,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -5575,7 +5576,7 @@
   "dhuhr_minute": "21",
   "dhuhr_hour": "11",
   "maghrib_minute": 9,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -5593,7 +5594,7 @@
   "dhuhr_minute": "21",
   "dhuhr_hour": "11",
   "maghrib_minute": 9,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -5611,7 +5612,7 @@
   "dhuhr_minute": "21",
   "dhuhr_hour": "11",
   "maghrib_minute": 8,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "event": " وفاة سيدة نساء العالمين فاطمة الزهراء (ع)",
   "status": "غير صالحة"
  },
@@ -5630,7 +5631,7 @@
   "dhuhr_minute": "21",
   "dhuhr_hour": "11",
   "maghrib_minute": 7,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -5648,7 +5649,7 @@
   "dhuhr_minute": "21",
   "dhuhr_hour": "11",
   "maghrib_minute": 7,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -5666,7 +5667,7 @@
   "dhuhr_minute": "21",
   "dhuhr_hour": "11",
   "maghrib_minute": 7,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -5684,7 +5685,7 @@
   "dhuhr_minute": 22,
   "dhuhr_hour": "11",
   "maghrib_minute": 6,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -5702,7 +5703,7 @@
   "dhuhr_minute": 22,
   "dhuhr_hour": "11",
   "maghrib_minute": 6,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -5720,7 +5721,7 @@
   "dhuhr_minute": 22,
   "dhuhr_hour": "11",
   "maghrib_minute": 5,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -5738,7 +5739,7 @@
   "dhuhr_minute": 22,
   "dhuhr_hour": "11",
   "maghrib_minute": 5,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -5756,7 +5757,7 @@
   "dhuhr_minute": 22,
   "dhuhr_hour": "11",
   "maghrib_minute": 4,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -5774,7 +5775,7 @@
   "dhuhr_minute": 22,
   "dhuhr_hour": "11",
   "maghrib_minute": 4,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -5792,7 +5793,7 @@
   "dhuhr_minute": 22,
   "dhuhr_hour": "11",
   "maghrib_minute": 4,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -5810,7 +5811,7 @@
   "dhuhr_minute": "22",
   "dhuhr_hour": "11",
   "maghrib_minute": 3,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -5828,7 +5829,7 @@
   "dhuhr_minute": "23",
   "dhuhr_hour": "11",
   "maghrib_minute": 3,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -5846,7 +5847,7 @@
   "dhuhr_minute": "23",
   "dhuhr_hour": "11",
   "maghrib_minute": 3,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -5864,7 +5865,7 @@
   "dhuhr_minute": "23",
   "dhuhr_hour": "11",
   "maghrib_minute": 2,
-  "maghrib_hour": 5,
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -5882,7 +5883,7 @@
   "dhuhr_minute": "23",
   "dhuhr_hour": "11",
   "maghrib_minute": 2,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -5900,7 +5901,7 @@
   "dhuhr_minute": "23",
   "dhuhr_hour": "11",
   "maghrib_minute": 2,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -5918,7 +5919,7 @@
   "dhuhr_minute": "24",
   "dhuhr_hour": "11",
   "maghrib_minute": 1,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -5936,7 +5937,7 @@
   "dhuhr_minute": "24",
   "dhuhr_hour": "11",
   "maghrib_minute": 1,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -5954,7 +5955,7 @@
   "dhuhr_minute": "24",
   "dhuhr_hour": "11",
   "maghrib_minute": 1,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "event": " وفاة سيدة نساء العالمين فاطمة الزهراء (ع)",
   "status": "غير صالحة"
  },
@@ -5973,7 +5974,7 @@
   "dhuhr_minute": "25",
   "dhuhr_hour": "11",
   "maghrib_minute": 1,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -5991,7 +5992,7 @@
   "dhuhr_minute": "25",
   "dhuhr_hour": "11",
   "maghrib_minute": 1,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -6009,7 +6010,7 @@
   "dhuhr_minute": "25",
   "dhuhr_hour": "11",
   "maghrib_minute": 1,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -6027,7 +6028,7 @@
   "dhuhr_minute": "25",
   "dhuhr_hour": "11",
   "maghrib_minute": 1,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -6045,7 +6046,7 @@
   "dhuhr_minute": "26",
   "dhuhr_hour": "11",
   "maghrib_minute": 1,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -6063,7 +6064,7 @@
   "dhuhr_minute": "26",
   "dhuhr_hour": "11",
   "maghrib_minute": 1,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -6081,7 +6082,7 @@
   "dhuhr_minute": "27",
   "dhuhr_hour": "11",
   "maghrib_minute": 1,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -6099,7 +6100,7 @@
   "dhuhr_minute": "27",
   "dhuhr_hour": "11",
   "maghrib_minute": 1,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -6117,7 +6118,7 @@
   "dhuhr_minute": "27",
   "dhuhr_hour": "11",
   "maghrib_minute": 1,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -6135,7 +6136,7 @@
   "dhuhr_minute": "28",
   "dhuhr_hour": "11",
   "maghrib_minute": 1,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "event": " وفاة السيدة فاطمة أم البنين ( ع )",
   "status": "غير صالحة"
  },
@@ -6154,7 +6155,7 @@
   "dhuhr_minute": "28",
   "dhuhr_hour": "11",
   "maghrib_minute": 2,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -6172,7 +6173,7 @@
   "dhuhr_minute": "28",
   "dhuhr_hour": "11",
   "maghrib_minute": 2,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -6190,7 +6191,7 @@
   "dhuhr_minute": "29",
   "dhuhr_hour": "11",
   "maghrib_minute": 2,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -6208,7 +6209,7 @@
   "dhuhr_minute": "29",
   "dhuhr_hour": "11",
   "maghrib_minute": 2,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -6226,7 +6227,7 @@
   "dhuhr_minute": "30",
   "dhuhr_hour": "11",
   "maghrib_minute": 2,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -6244,7 +6245,7 @@
   "dhuhr_minute": "30",
   "dhuhr_hour": "11",
   "maghrib_minute": 3,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -6262,7 +6263,7 @@
   "dhuhr_minute": "31",
   "dhuhr_hour": "11",
   "maghrib_minute": 3,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "event": "مولد السيدة فاطمة الزهراء  ( ع )",
   "status": "صالحة"
  },
@@ -6281,7 +6282,7 @@
   "dhuhr_minute": "31",
   "dhuhr_hour": "11",
   "maghrib_minute": 3,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -6299,7 +6300,7 @@
   "dhuhr_minute": "32",
   "dhuhr_hour": "11",
   "maghrib_minute": 3,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -6317,7 +6318,7 @@
   "dhuhr_minute": "32",
   "dhuhr_hour": "11",
   "maghrib_minute": 4,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -6335,7 +6336,7 @@
   "dhuhr_minute": "33",
   "dhuhr_hour": "11",
   "maghrib_minute": 4,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -6353,7 +6354,7 @@
   "dhuhr_minute": "33",
   "dhuhr_hour": "11",
   "maghrib_minute": 4,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "event": "العيد الوطني المجيد",
   "status": "غير صالحة"
  },
@@ -6372,7 +6373,7 @@
   "dhuhr_minute": "34",
   "dhuhr_hour": "11",
   "maghrib_minute": 5,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -6390,7 +6391,7 @@
   "dhuhr_minute": "34",
   "dhuhr_hour": "11",
   "maghrib_minute": 5,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -6408,7 +6409,7 @@
   "dhuhr_minute": "34",
   "dhuhr_hour": "11",
   "maghrib_minute": 6,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -6426,7 +6427,7 @@
   "dhuhr_minute": "35",
   "dhuhr_hour": "11",
   "maghrib_minute": 6,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -6444,7 +6445,7 @@
   "dhuhr_minute": "35",
   "dhuhr_hour": "11",
   "maghrib_minute": 7,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -6462,7 +6463,7 @@
   "dhuhr_minute": "36",
   "dhuhr_hour": "11",
   "maghrib_minute": 7,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "event": " مولد الإمام محمد الباقر  (ع) ",
   "status": "صالحة"
  },
@@ -6481,7 +6482,7 @@
   "dhuhr_minute": "36",
   "dhuhr_hour": "11",
   "maghrib_minute": 8,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "event": " مولد الإمام علي الهادي (ع) ",
   "status": "غير صالحة"
  },
@@ -6500,7 +6501,7 @@
   "dhuhr_minute": "37",
   "dhuhr_hour": "11",
   "maghrib_minute": 9,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "event": " شهادة الإمام علي الهادي (ع)",
   "status": "صالحة"
  },
@@ -6519,7 +6520,7 @@
   "dhuhr_minute": "37",
   "dhuhr_hour": "11",
   "maghrib_minute": 9,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "غير صالحة"
  },
  {
@@ -6537,7 +6538,7 @@
   "dhuhr_minute": "38",
   "dhuhr_hour": "11",
   "maghrib_minute": 10,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -6555,7 +6556,7 @@
   "dhuhr_minute": "38",
   "dhuhr_hour": "11",
   "maghrib_minute": 10,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -6573,7 +6574,7 @@
   "dhuhr_minute": "39",
   "dhuhr_hour": "11",
   "maghrib_minute": 11,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -6591,7 +6592,7 @@
   "dhuhr_minute": "39",
   "dhuhr_hour": "11",
   "maghrib_minute": 11,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "status": "صالحة"
  },
  {
@@ -6609,7 +6610,7 @@
   "dhuhr_minute": "40",
   "dhuhr_hour": "11",
   "maghrib_minute": 12,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "event": " مولد عبدا... الرضيع بن الحسين (رض)",
   "status": "صالحة"
  },
@@ -6628,7 +6629,7 @@
   "dhuhr_minute": "40",
   "dhuhr_hour": "11",
   "maghrib_minute": 13,
-  "maghrib_hour": "5",
+  "maghrib_hour": "17",
   "event": " مولد الإمام محمد الجواد (ع)",
   "status": "صالحة"
  }
