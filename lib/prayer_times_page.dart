@@ -14,12 +14,11 @@ class PrayerTimesPage extends StatefulWidget {
 
 class _PrayerTimesPageState extends State<PrayerTimesPage> {
   Map<String, dynamic>? todayData;
-  String? todayDate;
-  String? todayDay;
-  String? hijriDate;
+  String? combinedDate; // التاريخ المدمج
   Duration? timeUntilNextPrayer;
   String? nextPrayerName;
   Timer? countdownTimer;
+  String? dailyVerse; // آية القرآن اليومية
 
   // تحويل الأشهر والأيام من الإنجليزية إلى العربية
   final Map<String, String> englishToArabicMonths = {
@@ -53,6 +52,7 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
     loadPrayerTimes();
     calculateTimeUntilNextPrayer();
     startCountdown();
+    loadDailyVerse(); // تحميل الآية اليومية
   }
 
   @override
@@ -90,9 +90,19 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
     if (today != null) {
       setState(() {
         todayData = today;
-        todayDate = '$currentDay $currentMonth $currentYear';
-        todayDay = today['day_of_week'];
-        hijriDate = '${today['hijri_month_name']} ${today['hijri_year']}';
+
+        String todayDay = today['day_of_week'];
+        String hijriDay = today['hijri_day'].toString();
+        String hijriMonth = today['hijri_month_name'];
+        String hijriYear = today['hijri_year'].toString();
+
+        String gregorianDay = today['gregorian_day'].toString();
+        String gregorianMonth = today['gregorian_month'];
+        String gregorianYear = today['gregorian_year'].toString();
+
+        // إنشاء التاريخ المدمج
+        combinedDate =
+            '$todayDay $hijriDay $hijriMonth $hijriYear - $gregorianDay $gregorianMonth $gregorianYear';
       });
     }
   }
@@ -113,16 +123,17 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
     int adjustedHour = hour % 12 == 0 ? 12 : hour % 12;
     String period = isPM ? 'م' : 'ص';
 
-    return '${adjustedHour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')} $period';
+    return '${adjustedHour.toString().padLeft(2, '0')}:'
+        '${minute.toString().padLeft(2, '0')} $period';
   }
 
   void calculateTimeUntilNextPrayer() {
     if (todayData != null) {
       List<String> prayerTimes = [
-        '${todayData!['fajr_hour'].toString()}:${todayData!['fajr_minute'].toString()}',
-        '${todayData!['sunrise_hour'].toString()}:${todayData!['sunrise_minute'].toString()}',
-        '${todayData!['dhuhr_hour'].toString()}:${todayData!['dhuhr_minute'].toString()}',
-        '${todayData!['maghrib_hour'].toString()}:${todayData!['maghrib_minute'].toString()}',
+        '${todayData!['fajr_hour']}:${todayData!['fajr_minute']}',
+        '${todayData!['sunrise_hour']}:${todayData!['sunrise_minute']}',
+        '${todayData!['dhuhr_hour']}:${todayData!['dhuhr_minute']}',
+        '${todayData!['maghrib_hour']}:${todayData!['maghrib_minute']}',
       ];
       List<String> prayerNames = [
         'الفجر',
@@ -154,14 +165,15 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
         }
       }
 
-      // إذا لم يتم العثور على الصلاة التالية، تعيين العد التنازلي للفجر في اليوم التالي
+      // إذا لم يتم العثور على الصلاة التالية، تعيين العد التنازلي للفجر
       if (!foundNextPrayer) {
+        List<String> fajrTimeParts = prayerTimes[0].split(':');
         DateTime nextFajrTime = DateTime(
           now.year,
           now.month,
           now.day + 1,
-          int.parse(prayerTimes[0].split(':')[0]),
-          int.parse(prayerTimes[0].split(':')[1]),
+          int.parse(fajrTimeParts[0]),
+          int.parse(fajrTimeParts[1]),
         );
         setState(() {
           timeUntilNextPrayer = nextFajrTime.difference(now);
@@ -179,10 +191,30 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
         });
       } else {
         timer.cancel();
-        // إعادة حساب الوقت حتى الصلاة التالية وإعادة تشغيل العد التنازلي
+        // إعادة حساب الوقت حتى الصلاة التالية وإعادة تشغيل العد
         calculateTimeUntilNextPrayer();
         startCountdown();
       }
+    });
+  }
+
+  Future<void> loadDailyVerse() async {
+    String jsonString = await rootBundle.loadString('assets/quran.json');
+    Map<String, dynamic> jsonData = json.decode(jsonString);
+
+    List<dynamic> verses = jsonData["Sheet 3"];
+
+    // حساب اليوم من السنة
+    int dayOfYear =
+        DateTime.now().difference(DateTime(DateTime.now().year, 1, 1)).inDays +
+            1;
+
+    int verseIndex = dayOfYear % verses.length;
+
+    String verse = verses[verseIndex].values.first;
+
+    setState(() {
+      dailyVerse = verse;
     });
   }
 
@@ -198,24 +230,24 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            SizedBox(height: AppStyles.verticalSpacing / 2),
             Container(
               padding: AppStyles.headerPadding,
               child: Center(
                 child: Text(
-                  'مسجد الشيخ براهيم',
+                  'مسجد الشيخ براهيم - الديه',
                   style: AppStyles.headerTextStyle,
                 ),
               ),
             ),
             SizedBox(height: AppStyles.verticalSpacing),
-            Text(
-              '${todayDay ?? ''} - ${todayDate ?? ''}',
-              style: AppStyles.dateTextStyle,
-            ),
-            Text(
-              ' ${hijriDate ?? ''}',
-              style: AppStyles.hijriDateTextStyle,
-            ),
+            // عرض التاريخ المدمج في سطر واحد
+            if (combinedDate != null)
+              Text(
+                combinedDate!,
+                style: AppStyles.dateTextStyle,
+                textAlign: TextAlign.center,
+              ),
             if (todayData?['event'] != null)
               Text(
                 'المناسبة: ${todayData!['event']}',
@@ -230,7 +262,7 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
               children: [
                 // عرض الوقت باللغة الإنجليزية في المركز
                 Text(
-                  DateFormat('hh:mm a').format(DateTime.now()),
+                  DateFormat('hh:mm:ss a').format(DateTime.now()),
                   style: AppStyles.timeTextStyle,
                 ),
                 // استخدام Transform.translate لتحريك الشعار
@@ -248,7 +280,7 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
                     offset: Offset(
                         600.0, 0), // (x, y) قم بتعديل القيمة x حسب الحاجة
                     child: Container(
-                      width: 250.0, // زيادة العرضr
+                      width: 250.0, // زيادة العرض
                       height: 250.0, // زيادة الارتفاع
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
@@ -277,6 +309,17 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
                   ),
               ],
             ),
+
+            // عرض الآية القرآنية تحت الساعة الزمنية
+            if (dailyVerse != null)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20.0),
+                child: Text(
+                  dailyVerse!,
+                  style: AppStyles.quranVerseTextStyle,
+                  textAlign: TextAlign.center,
+                ),
+              ),
 
             Divider(color: AppStyles.dividerColor, thickness: 2),
             SizedBox(height: AppStyles.verticalSpacing),
