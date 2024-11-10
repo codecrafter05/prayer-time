@@ -20,6 +20,7 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
   Duration? timeUntilNextPrayer;
   String? nextPrayerName;
   Timer? countdownTimer;
+  String? dailyVerse; // آية القرآن اليومية
 
   // تحويل الأشهر والأيام من الإنجليزية إلى العربية
   final Map<String, String> englishToArabicMonths = {
@@ -53,6 +54,7 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
     loadPrayerTimes();
     calculateTimeUntilNextPrayer();
     startCountdown();
+    loadDailyVerse(); // تحميل الآية اليومية
   }
 
   @override
@@ -186,6 +188,28 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
     });
   }
 
+  Future<void> loadDailyVerse() async {
+    String jsonString = await rootBundle.loadString('assets/quran.json');
+    Map<String, dynamic> jsonData = json.decode(jsonString);
+
+    List<dynamic> verses = jsonData["Sheet 3"];
+
+    // حساب اليوم من السنة
+    int dayOfYear =
+        DateTime.now().difference(DateTime(DateTime.now().year, 1, 1)).inDays +
+            1;
+    // أو يمكنك استخدام:
+    // int dayOfYear = int.parse(DateFormat("D").format(DateTime.now()));
+
+    int verseIndex = dayOfYear % verses.length;
+
+    String verse = verses[verseIndex].values.first;
+
+    setState(() {
+      dailyVerse = verse;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // للحصول على عرض الشاشة
@@ -198,11 +222,17 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            // Text(
+            //   'لجنة المسجد',
+            //   style: AppStyles.largeHeaderTextStyle,
+            //   textAlign: TextAlign.center,
+            // ),
+            SizedBox(height: AppStyles.verticalSpacing / 2),
             Container(
               padding: AppStyles.headerPadding,
               child: Center(
                 child: Text(
-                  'مسجد الشيخ براهيم',
+                  'مسجد الشيخ براهيم - الديه',
                   style: AppStyles.headerTextStyle,
                 ),
               ),
@@ -230,7 +260,7 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
               children: [
                 // عرض الوقت باللغة الإنجليزية في المركز
                 Text(
-                  DateFormat('hh:mm a').format(DateTime.now()),
+                  DateFormat('hh:mm:ss a').format(DateTime.now()),
                   style: AppStyles.timeTextStyle,
                 ),
                 // استخدام Transform.translate لتحريك الشعار
@@ -248,7 +278,7 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
                     offset: Offset(
                         600.0, 0), // (x, y) قم بتعديل القيمة x حسب الحاجة
                     child: Container(
-                      width: 250.0, // زيادة العرضr
+                      width: 250.0, // زيادة العرض
                       height: 250.0, // زيادة الارتفاع
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
@@ -277,6 +307,17 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
                   ),
               ],
             ),
+
+            // عرض الآية القرآنية تحت الساعة الزمنية
+            if (dailyVerse != null)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20.0),
+                child: Text(
+                  dailyVerse!,
+                  style: AppStyles.quranVerseTextStyle,
+                  textAlign: TextAlign.center,
+                ),
+              ),
 
             Divider(color: AppStyles.dividerColor, thickness: 2),
             SizedBox(height: AppStyles.verticalSpacing),

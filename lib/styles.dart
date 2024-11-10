@@ -20,7 +20,7 @@ class AppStyles {
 
   // أنماط النصوص
   static const TextStyle headerTextStyle = TextStyle(
-    fontSize: 64,
+    fontSize: 30,
     color: primaryTextColor,
     fontWeight: FontWeight.bold,
     fontFamily: 'Arabic',
@@ -52,13 +52,13 @@ class AppStyles {
   );
 
   static const TextStyle nextPrayerLabelTextStyle = TextStyle(
-    fontSize: 24, // تقليل حجم الخط
+    fontSize: 24,
     color: secondaryTextColor,
     fontFamily: 'Arabic',
   );
 
   static const TextStyle countdownTextStyle = TextStyle(
-    fontSize: 40, // تقليل حجم الخط
+    fontSize: 40,
     color: accentTextColor,
     fontWeight: FontWeight.bold,
     fontFamily: 'Digital',
@@ -79,6 +79,19 @@ class AppStyles {
   static const TextStyle footerTextStyle = TextStyle(
     fontSize: 28,
     color: primaryTextColor,
+    fontFamily: 'Arabic',
+  );
+
+  // نمط نص الآية القرآنية
+  static const TextStyle quranVerseTextStyle = TextStyle(
+    fontSize: 28,
+    color: Colors.white,
+    fontFamily: 'Arabic',
+  );
+  static const TextStyle largeHeaderTextStyle = TextStyle(
+    fontSize: 100, // حجم خط أكبر
+    color: primaryTextColor,
+    fontWeight: FontWeight.bold,
     fontFamily: 'Arabic',
   );
 }

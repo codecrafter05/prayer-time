@@ -59,6 +59,7 @@ flutter:
   assets:
     - assets/prayer_times.json
     - assets/images/logo.png
+    - assets/quran.json
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
