@@ -19,12 +19,12 @@ class PrayerTimeColumn extends StatelessWidget {
       children: [
         Text(
           prayer,
-          style: AppStyles.prayerRowTextStyle,
+          style: AppStyles.prayerNameTextStyle, // استخدم النمط الصحيح
         ),
         SizedBox(height: 8),
         Text(
           '$hour:$minute',
-          style: AppStyles.prayerRowTextStyle,
+          style: AppStyles.prayerTimeTextStyle, // استخدم النمط الصحيح
         ),
       ],
     );
