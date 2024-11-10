@@ -230,6 +230,12 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            // إضافة الجملة الجديدة بخط كبير فوق العنوان الحالي
+            Text(
+              'لجنة المسجد',
+              style: AppStyles.largeHeaderTextStyle,
+              textAlign: TextAlign.center,
+            ),
             SizedBox(height: AppStyles.verticalSpacing / 2),
             Container(
               padding: AppStyles.headerPadding,
