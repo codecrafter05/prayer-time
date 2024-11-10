@@ -1,8 +1,11 @@
+// prayer_times_page.dart
+
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:intl/intl.dart';
+import 'styles.dart'; // استيراد ملف الأنماط
 
 class PrayerTimesPage extends StatefulWidget {
   @override
@@ -18,7 +21,7 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
   String? nextPrayerName;
   Timer? countdownTimer;
 
-  // Translation maps from English to Arabic
+  // تحويل الأشهر والأيام من الإنجليزية إلى العربية
   final Map<String, String> englishToArabicMonths = {
     'January': 'يناير',
     'February': 'فبراير',
@@ -67,7 +70,7 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
     String currentDayOfWeekEnglish = DateFormat('EEEE').format(DateTime.now());
     int currentYear = DateTime.now().year;
 
-    // Translate month and day from English to Arabic
+    // تحويل الشهر واليوم من الإنجليزية إلى العربية
     String currentMonth =
         englishToArabicMonths[currentMonthEnglish] ?? currentMonthEnglish;
     String currentDayOfWeek =
@@ -97,18 +100,18 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
   String formatTimeWithPeriod(int hour, int minute, {required String prayer}) {
     bool isPM;
 
-    // Determine AM/PM based on the prayer and hour
+    // تحديد AM/PM بناءً على الصلاة والساعة
     if (prayer == 'الفجر' || prayer == 'الشروق') {
-      isPM = false; // Always AM for Fajr and Sunrise
+      isPM = false; // دائماً صباحاً للفجر والشروق
     } else if (prayer == 'الظهر') {
-      isPM = hour >= 12; // PM if 12 or above, otherwise AM
+      isPM = hour >= 12; // مساءً إذا كانت الساعة 12 أو أكثر
     } else {
-      isPM = true; // Maghrib is always PM
+      isPM = true; // المغرب دائماً مساءً
     }
 
-    // Convert to 12-hour format
+    // تحويل إلى صيغة 12 ساعة
     int adjustedHour = hour % 12 == 0 ? 12 : hour % 12;
-    String period = isPM ? 'PM' : 'AM';
+    String period = isPM ? 'م' : 'ص';
 
     return '${adjustedHour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')} $period';
   }
@@ -151,7 +154,7 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
         }
       }
 
-      // If no next prayer found, set countdown to Fajr next day
+      // إذا لم يتم العثور على الصلاة التالية، تعيين العد التنازلي للفجر في اليوم التالي
       if (!foundNextPrayer) {
         DateTime nextFajrTime = DateTime(
           now.year,
@@ -162,7 +165,7 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
         );
         setState(() {
           timeUntilNextPrayer = nextFajrTime.difference(now);
-          nextPrayerName = prayerNames[0]; // Fajr
+          nextPrayerName = prayerNames[0]; // الفجر
         });
       }
     }
@@ -176,7 +179,7 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
         });
       } else {
         timer.cancel();
-        // Recalculate time until the next prayer and restart countdown
+        // إعادة حساب الوقت حتى الصلاة التالية وإعادة تشغيل العد التنازلي
         calculateTimeUntilNextPrayer();
         startCountdown();
       }
@@ -185,86 +188,107 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
 
   @override
   Widget build(BuildContext context) {
+    // للحصول على عرض الشاشة
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
-      backgroundColor: Colors.grey[800],
-      appBar: AppBar(
-        title: Text('مواقيت الصلاة'),
-        backgroundColor: Colors.red,
-      ),
+      backgroundColor: AppStyles.backgroundColor,
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: AppStyles.pagePadding,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
-              padding: EdgeInsets.all(12),
-              color: Colors.red,
+              padding: AppStyles.headerPadding,
               child: Center(
                 child: Text(
                   'مسجد الشيخ براهيم',
-                  style: TextStyle(
-                    fontSize: 24,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: AppStyles.headerTextStyle,
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: AppStyles.verticalSpacing),
             Text(
-              '${todayDay ?? ''} - $todayDate',
-              style: TextStyle(color: Colors.white, fontSize: 18),
+              '${todayDay ?? ''} - ${todayDate ?? ''}',
+              style: AppStyles.dateTextStyle,
             ),
             Text(
-              'الهجري: $hijriDate',
-              style: TextStyle(color: Colors.white70, fontSize: 16),
+              ' ${hijriDate ?? ''}',
+              style: AppStyles.hijriDateTextStyle,
             ),
             if (todayData?['event'] != null)
               Text(
                 'المناسبة: ${todayData!['event']}',
-                style: TextStyle(color: Colors.orange, fontSize: 16),
+                style: AppStyles.eventTextStyle,
                 textAlign: TextAlign.center,
               ),
-            SizedBox(height: 20),
-            Text(
-              DateFormat('hh:mm a').format(DateTime.now()),
-              style: TextStyle(fontSize: 32, color: Colors.white),
-            ),
-            if (timeUntilNextPrayer != null)
-              Column(
-                children: [
-                  Text(
-                    'الوقت المتبقي حتى ${nextPrayerName ?? ''}',
-                    style: TextStyle(color: Colors.white70, fontSize: 16),
+            SizedBox(height: AppStyles.verticalSpacing),
+
+            // تعديل عرض الساعة الزمنية والعد التنازلي داخل Stack
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                // عرض الوقت باللغة الإنجليزية في المركز
+                Text(
+                  DateFormat('hh:mm a').format(DateTime.now()),
+                  style: AppStyles.timeTextStyle,
+                ),
+                // استخدام Transform.translate لتحريك الشعار
+                Transform.translate(
+                  offset:
+                      Offset(-600.0, 0), // (x, y) قم بتعديل القيمة x حسب الحاجة
+                  child: Image.asset(
+                    'assets/images/logo.png',
+                    height: 200,
                   ),
-                  Text(
-                    '${timeUntilNextPrayer!.inHours.toString().padLeft(2, '0')}:${(timeUntilNextPrayer!.inMinutes % 60).toString().padLeft(2, '0')}:${(timeUntilNextPrayer!.inSeconds % 60).toString().padLeft(2, '0')}',
-                    style: TextStyle(
-                      fontSize: 32,
-                      color: Colors.amber,
-                      fontWeight: FontWeight.bold,
+                ),
+                // إضافة العد التنازلي داخل دائرة وتحريكه إلى اليمين
+                if (timeUntilNextPrayer != null)
+                  Transform.translate(
+                    offset: Offset(
+                        600.0, 0), // (x, y) قم بتعديل القيمة x حسب الحاجة
+                    child: Container(
+                      width: 250.0, // زيادة العرضr
+                      height: 250.0, // زيادة الارتفاع
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white24, // لون الخلفية للدائرة
+                      ),
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min, // إضافة هذا السطر
+                          children: [
+                            Text(
+                              '${timeUntilNextPrayer!.inHours.toString().padLeft(2, '0')}:${(timeUntilNextPrayer!.inMinutes % 60).toString().padLeft(2, '0')}:${(timeUntilNextPrayer!.inSeconds % 60).toString().padLeft(2, '0')}',
+                              style: AppStyles.countdownTextStyle,
+                              textAlign: TextAlign.center,
+                            ),
+                            SizedBox(height: 8.0),
+                            Text(
+                              '${nextPrayerName ?? ''}',
+                              style: AppStyles.nextPrayerLabelTextStyle,
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
-                ],
-              ),
-            Divider(color: Colors.white54),
+              ],
+            ),
+
+            Divider(color: AppStyles.dividerColor, thickness: 2),
+            SizedBox(height: AppStyles.verticalSpacing),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 PrayerTimeColumn(
-                  prayer: 'المغرب',
+                  prayer: 'الفجر',
                   time: formatTimeWithPeriod(
-                    int.parse(todayData?['maghrib_hour'].toString() ?? '5'),
-                    int.parse(todayData?['maghrib_minute'].toString() ?? '0'),
-                    prayer: 'المغرب',
-                  ),
-                ),
-                PrayerTimeColumn(
-                  prayer: 'الظهر',
-                  time: formatTimeWithPeriod(
-                    int.parse(todayData?['dhuhr_hour'].toString() ?? '12'),
-                    int.parse(todayData?['dhuhr_minute'].toString() ?? '0'),
-                    prayer: 'الظهر',
+                    int.parse(todayData?['fajr_hour'].toString() ?? '5'),
+                    int.parse(todayData?['fajr_minute'].toString() ?? '0'),
+                    prayer: 'الفجر',
                   ),
                 ),
                 PrayerTimeColumn(
@@ -276,14 +300,34 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
                   ),
                 ),
                 PrayerTimeColumn(
-                  prayer: 'الفجر',
+                  prayer: 'الظهر',
                   time: formatTimeWithPeriod(
-                    int.parse(todayData?['fajr_hour'].toString() ?? '5'),
-                    int.parse(todayData?['fajr_minute'].toString() ?? '0'),
-                    prayer: 'الفجر',
+                    int.parse(todayData?['dhuhr_hour'].toString() ?? '12'),
+                    int.parse(todayData?['dhuhr_minute'].toString() ?? '0'),
+                    prayer: 'الظهر',
+                  ),
+                ),
+                PrayerTimeColumn(
+                  prayer: 'المغرب',
+                  time: formatTimeWithPeriod(
+                    int.parse(todayData?['maghrib_hour'].toString() ?? '5'),
+                    int.parse(todayData?['maghrib_minute'].toString() ?? '0'),
+                    prayer: 'المغرب',
                   ),
                 ),
               ],
+            ),
+            // إضافة Spacer لدفع النص إلى الأسفل
+            Expanded(
+              child: SizedBox(),
+            ),
+            // إضافة الجملة في الفوتر
+            Center(
+              child: Text(
+                'سُبْحَانَ اللّهِ وَ بِحَمْدِهِ سُبْحَانَ اللّهِ الْعَظِيم',
+                style: AppStyles.footerTextStyle,
+                textAlign: TextAlign.center,
+              ),
             ),
           ],
         ),
@@ -292,7 +336,7 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
   }
 }
 
-// Custom widget for prayer time display
+// مكون PrayerTimeColumn لعرض وقت الصلاة
 class PrayerTimeColumn extends StatelessWidget {
   final String prayer;
   final String time;
@@ -305,12 +349,12 @@ class PrayerTimeColumn extends StatelessWidget {
       children: [
         Text(
           prayer,
-          style: TextStyle(color: Colors.white, fontSize: 18),
+          style: AppStyles.prayerNameTextStyle,
         ),
-        SizedBox(height: 4),
+        SizedBox(height: AppStyles.prayerTimeSpacing),
         Text(
           time,
-          style: TextStyle(color: Colors.white70, fontSize: 16),
+          style: AppStyles.prayerTimeTextStyle,
         ),
       ],
     );
