@@ -2,6 +2,8 @@
 
 import 'dart:async';
 import 'dart:convert';
+import 'dart:ui' as ui; // لإدارة الصور
+import 'dart:math' as math; // للعمليات الرياضية
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:intl/intl.dart';
@@ -19,6 +21,8 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
   String? nextPrayerName;
   Timer? countdownTimer;
   String? dailyVerse; // آية القرآن اليومية
+
+  ui.Image? clockImage; // لإدارة صورة الساعة
 
   // تحويل الأشهر والأيام من الإنجليزية إلى العربية
   final Map<String, String> englishToArabicMonths = {
@@ -53,12 +57,28 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
     calculateTimeUntilNextPrayer();
     startCountdown();
     loadDailyVerse(); // تحميل الآية اليومية
+    loadClockImage(); // تحميل صورة الساعة
+
+    // تحديث واجهة المستخدم كل ثانية لتحريك عقارب الساعة
+    Timer.periodic(Duration(seconds: 1), (Timer t) {
+      setState(() {});
+    });
   }
 
   @override
   void dispose() {
     countdownTimer?.cancel();
     super.dispose();
+  }
+
+  Future<void> loadClockImage() async {
+    // تحميل الصورة من المسار المحدد
+    final data = await rootBundle.load('assets/images/Clock.png');
+    final bytes = data.buffer.asUint8List();
+    final image = await decodeImageFromList(bytes);
+    setState(() {
+      clockImage = image;
+    });
   }
 
   Future<void> loadPrayerTimes() async {
@@ -101,8 +121,8 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
         String gregorianYear = today['gregorian_year'].toString();
 
         // إنشاء التاريخ المدمج
-        combinedDate =
-            '$todayDay $hijriDay $hijriMonth $hijriYear - $gregorianDay $gregorianMonth $gregorianYear';
+        combinedDate = '$todayDay $hijriDay $hijriMonth $hijriYear - '
+            '$gregorianDay $gregorianMonth $gregorianYear';
       });
     }
   }
@@ -224,161 +244,171 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: AppStyles.backgroundColor,
-      body: Padding(
-        padding: AppStyles.pagePadding,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            // إضافة الجملة الجديدة بخط كبير فوق العنوان الحالي
-            Text(
-              'لجنة المسجد',
-              style: AppStyles.largeHeaderTextStyle,
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: AppStyles.verticalSpacing / 2),
-            Container(
-              padding: AppStyles.headerPadding,
-              child: Center(
-                child: Text(
-                  'مسجد الشيخ براهيم - الديه',
-                  style: AppStyles.headerTextStyle,
-                ),
-              ),
-            ),
-            SizedBox(height: AppStyles.verticalSpacing),
-            // عرض التاريخ المدمج في سطر واحد
-            if (combinedDate != null)
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/qmt.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Padding(
+          padding: AppStyles.pagePadding,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              // إضافة الجملة الجديدة بخط كبير فوق العنوان الحالي
               Text(
-                combinedDate!,
-                style: AppStyles.dateTextStyle,
+                'لجنة المسجد',
+                style: AppStyles.largeHeaderTextStyle,
                 textAlign: TextAlign.center,
               ),
-            if (todayData?['event'] != null)
-              Text(
-                'المناسبة: ${todayData!['event']}',
-                style: AppStyles.eventTextStyle,
-                textAlign: TextAlign.center,
-              ),
-            SizedBox(height: AppStyles.verticalSpacing),
-
-            // تعديل عرض الساعة الزمنية والعد التنازلي داخل Stack
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                // عرض الوقت باللغة الإنجليزية في المركز
-                Text(
-                  DateFormat('hh:mm:ss a').format(DateTime.now()),
-                  style: AppStyles.timeTextStyle,
-                ),
-                // استخدام Transform.translate لتحريك الشعار
-                Transform.translate(
-                  offset:
-                      Offset(-600.0, 0), // (x, y) قم بتعديل القيمة x حسب الحاجة
-                  child: Image.asset(
-                    'assets/images/logo.png',
-                    height: 200,
+              SizedBox(height: AppStyles.verticalSpacing / 2),
+              Container(
+                padding: AppStyles.headerPadding,
+                child: Center(
+                  child: Text(
+                    'مسجد الشيخ براهيم - الديه',
+                    style: AppStyles.headerTextStyle,
                   ),
                 ),
-                // إضافة العد التنازلي داخل دائرة وتحريكه إلى اليمين
-                if (timeUntilNextPrayer != null)
-                  Transform.translate(
-                    offset: Offset(
-                        600.0, 0), // (x, y) قم بتعديل القيمة x حسب الحاجة
+              ),
+              SizedBox(height: AppStyles.verticalSpacing),
+              // عرض التاريخ المدمج في سطر واحد
+              if (combinedDate != null)
+                Text(
+                  combinedDate!,
+                  style: AppStyles.dateTextStyle,
+                  textAlign: TextAlign.center,
+                ),
+              if (todayData?['event'] != null)
+                Text(
+                  'المناسبة: ${todayData!['event']}',
+                  style: AppStyles.eventTextStyle,
+                  textAlign: TextAlign.center,
+                ),
+              SizedBox(height: AppStyles.verticalSpacing),
+
+              // تعديل عرض العد التنازلي والشعار داخل Row
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // الشعار داخل دائرة مملوءة
+                  Padding(
+                    padding: EdgeInsets.only(left: 10.0),
                     child: Container(
-                      width: 250.0, // زيادة العرض
-                      height: 250.0, // زيادة الارتفاع
+                      width: 250.0,
+                      height: 250.0,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Colors.white24, // لون الخلفية للدائرة
-                      ),
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min, // إضافة هذا السطر
-                          children: [
-                            Text(
-                              '${timeUntilNextPrayer!.inHours.toString().padLeft(2, '0')}:${(timeUntilNextPrayer!.inMinutes % 60).toString().padLeft(2, '0')}:${(timeUntilNextPrayer!.inSeconds % 60).toString().padLeft(2, '0')}',
-                              style: AppStyles.countdownTextStyle,
-                              textAlign: TextAlign.center,
-                            ),
-                            SizedBox(height: 8.0),
-                            Text(
-                              '${nextPrayerName ?? ''}',
-                              style: AppStyles.nextPrayerLabelTextStyle,
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
+                        image: DecorationImage(
+                          image: AssetImage('assets/images/logo.png'),
+                          fit: BoxFit.cover,
                         ),
                       ),
                     ),
                   ),
-              ],
-            ),
+                  SizedBox(width: 250.0), // الحفاظ على نفس التباعد
+                  // العد التنازلي مع العبارة داخل Column
+                  Column(
+                    children: [
+                      // عرض العبارة: الوقت المتبقي لصلاة اسم الصلاة
+                      if (nextPrayerName != null)
+                        Text(
+                          'الوقت المتبقي لصلاة $nextPrayerName',
+                          style: AppStyles.nextPrayerLabelTextStyle,
+                          textAlign: TextAlign.center,
+                        ),
+                      SizedBox(height: 8.0),
+                      // عرض العد التنازلي
+                      if (timeUntilNextPrayer != null)
+                        Text(
+                          '${timeUntilNextPrayer!.inHours.toString().padLeft(2, '0')}:'
+                          '${(timeUntilNextPrayer!.inMinutes % 60).toString().padLeft(2, '0')}:'
+                          '${(timeUntilNextPrayer!.inSeconds % 60).toString().padLeft(2, '0')}',
+                          style: AppStyles.countdownTextStyle,
+                          textAlign: TextAlign.center,
+                        ),
+                    ],
+                  ),
+                  SizedBox(width: 250.0), // الحفاظ على نفس التباعد
+                  // الدائرة على اليمين مع صورة الساعة وعقارب متحركة
+                  Padding(
+                    padding: EdgeInsets.only(right: 10.0),
+                    child: Container(
+                      width: 250.0,
+                      height: 250.0,
+                      child: CustomPaint(
+                        painter: ClockPainter(clockImage: clockImage),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
 
-            // عرض الآية القرآنية تحت الساعة الزمنية
-            if (dailyVerse != null)
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20.0),
+              // عرض الآية القرآنية تحت العد التنازلي
+              if (dailyVerse != null)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20.0),
+                  child: Text(
+                    dailyVerse!,
+                    style: AppStyles.quranVerseTextStyle,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+
+              Divider(color: AppStyles.dividerColor, thickness: 2),
+              SizedBox(height: AppStyles.verticalSpacing),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  PrayerTimeColumn(
+                    prayer: 'الفجر',
+                    time: formatTimeWithPeriod(
+                      int.parse(todayData?['fajr_hour'].toString() ?? '5'),
+                      int.parse(todayData?['fajr_minute'].toString() ?? '0'),
+                      prayer: 'الفجر',
+                    ),
+                  ),
+                  PrayerTimeColumn(
+                    prayer: 'الشروق',
+                    time: formatTimeWithPeriod(
+                      int.parse(todayData?['sunrise_hour'].toString() ?? '6'),
+                      int.parse(todayData?['sunrise_minute'].toString() ?? '0'),
+                      prayer: 'الشروق',
+                    ),
+                  ),
+                  PrayerTimeColumn(
+                    prayer: 'الظهر',
+                    time: formatTimeWithPeriod(
+                      int.parse(todayData?['dhuhr_hour'].toString() ?? '12'),
+                      int.parse(todayData?['dhuhr_minute'].toString() ?? '0'),
+                      prayer: 'الظهر',
+                    ),
+                  ),
+                  PrayerTimeColumn(
+                    prayer: 'المغرب',
+                    time: formatTimeWithPeriod(
+                      int.parse(todayData?['maghrib_hour'].toString() ?? '5'),
+                      int.parse(todayData?['maghrib_minute'].toString() ?? '0'),
+                      prayer: 'المغرب',
+                    ),
+                  ),
+                ],
+              ),
+              // إضافة Spacer لدفع النص إلى الأسفل
+              Expanded(
+                child: SizedBox(),
+              ),
+              // إضافة الجملة في الفوتر
+              Center(
                 child: Text(
-                  dailyVerse!,
-                  style: AppStyles.quranVerseTextStyle,
+                  'سُبْحَانَ اللّهِ وَ بِحَمْدِهِ سُبْحَانَ اللّهِ الْعَظِيم',
+                  style: AppStyles.footerTextStyle,
                   textAlign: TextAlign.center,
                 ),
               ),
-
-            Divider(color: AppStyles.dividerColor, thickness: 2),
-            SizedBox(height: AppStyles.verticalSpacing),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                PrayerTimeColumn(
-                  prayer: 'الفجر',
-                  time: formatTimeWithPeriod(
-                    int.parse(todayData?['fajr_hour'].toString() ?? '5'),
-                    int.parse(todayData?['fajr_minute'].toString() ?? '0'),
-                    prayer: 'الفجر',
-                  ),
-                ),
-                PrayerTimeColumn(
-                  prayer: 'الشروق',
-                  time: formatTimeWithPeriod(
-                    int.parse(todayData?['sunrise_hour'].toString() ?? '6'),
-                    int.parse(todayData?['sunrise_minute'].toString() ?? '0'),
-                    prayer: 'الشروق',
-                  ),
-                ),
-                PrayerTimeColumn(
-                  prayer: 'الظهر',
-                  time: formatTimeWithPeriod(
-                    int.parse(todayData?['dhuhr_hour'].toString() ?? '12'),
-                    int.parse(todayData?['dhuhr_minute'].toString() ?? '0'),
-                    prayer: 'الظهر',
-                  ),
-                ),
-                PrayerTimeColumn(
-                  prayer: 'المغرب',
-                  time: formatTimeWithPeriod(
-                    int.parse(todayData?['maghrib_hour'].toString() ?? '5'),
-                    int.parse(todayData?['maghrib_minute'].toString() ?? '0'),
-                    prayer: 'المغرب',
-                  ),
-                ),
-              ],
-            ),
-            // إضافة Spacer لدفع النص إلى الأسفل
-            Expanded(
-              child: SizedBox(),
-            ),
-            // إضافة الجملة في الفوتر
-            Center(
-              child: Text(
-                'سُبْحَانَ اللّهِ وَ بِحَمْدِهِ سُبْحَانَ اللّهِ الْعَظِيم',
-                style: AppStyles.footerTextStyle,
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -407,5 +437,96 @@ class PrayerTimeColumn extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+// ClockPainter لرسم عقارب الساعة المتحركة
+class ClockPainter extends CustomPainter {
+  final ui.Image? clockImage;
+
+  ClockPainter({this.clockImage});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (clockImage != null) {
+      // رسم صورة الساعة داخل الدائرة
+      Paint paint = Paint();
+      Rect rect = Rect.fromLTWH(0, 0, size.width, size.height);
+      canvas.clipPath(Path()..addOval(rect));
+      canvas.drawImageRect(
+        clockImage!,
+        Rect.fromLTWH(
+            0, 0, clockImage!.width.toDouble(), clockImage!.height.toDouble()),
+        rect,
+        paint,
+      );
+    } else {
+      // إذا لم يتم تحميل الصورة بعد، رسم دائرة فارغة
+      Paint circlePaint = Paint()..color = Colors.white24;
+      canvas.drawCircle(
+          Offset(size.width / 2, size.height / 2), size.width / 2, circlePaint);
+    }
+
+    // رسم عقارب الساعة
+    DateTime now = DateTime.now();
+    double centerX = size.width / 2;
+    double centerY = size.height / 2;
+    double radius = size.width / 2;
+
+    // حساب الزوايا للعقارب
+    double hourAngle = ((now.hour % 12) + now.minute / 60) * 30 * math.pi / 180;
+    double minuteAngle = (now.minute + now.second / 60) * 6 * math.pi / 180;
+    double secondAngle = now.second * 6 * math.pi / 180;
+
+    // رسم عقرب الساعات
+    Paint hourHandPaint = Paint()
+      ..color = Colors.black
+      ..strokeWidth = 4;
+
+    canvas.drawLine(
+      Offset(centerX, centerY),
+      Offset(
+        centerX + radius * 0.5 * math.sin(hourAngle),
+        centerY - radius * 0.5 * math.cos(hourAngle),
+      ),
+      hourHandPaint,
+    );
+
+    // رسم عقرب الدقائق
+    Paint minuteHandPaint = Paint()
+      ..color = Colors.black
+      ..strokeWidth = 2;
+
+    canvas.drawLine(
+      Offset(centerX, centerY),
+      Offset(
+        centerX + radius * 0.7 * math.sin(minuteAngle),
+        centerY - radius * 0.7 * math.cos(minuteAngle),
+      ),
+      minuteHandPaint,
+    );
+
+    // رسم عقرب الثواني
+    Paint secondHandPaint = Paint()
+      ..color = Colors.red
+      ..strokeWidth = 1;
+
+    canvas.drawLine(
+      Offset(centerX, centerY),
+      Offset(
+        centerX + radius * 0.9 * math.sin(secondAngle),
+        centerY - radius * 0.9 * math.cos(secondAngle),
+      ),
+      secondHandPaint,
+    );
+
+    // رسم النقطة المركزية
+    Paint centerDotPaint = Paint()..color = Colors.black;
+    canvas.drawCircle(Offset(centerX, centerY), 4, centerDotPaint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true;
   }
 }
