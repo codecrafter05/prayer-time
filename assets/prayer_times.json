@@ -1,25 +1,5 @@
 {
-"Sheet 2":[
-    {
-        "gregorian_day": 12,
-        "gregorian_month": "نوفمبر",
-        "gregorian_year": 2024,
-        "day_of_week": "الثلاثاء",
-        "hijri_day": 20,
-        "hijri_month_name": "رجب",
-        "hijri_year": 1446,
-        "fajr_minute": "03",
-        "fajr_hour": "5",
-        "sunrise_minute": "25",
-        "sunrise_hour": "6",
-        "dhuhr_minute": "41",
-        "dhuhr_hour": "11",
-        "maghrib_minute": 44,
-        "maghrib_hour": "17",
-        "event": " مولد الإمام محمد الباقر  (ع) ",
-        "status": "صالحة"
-    },
-    
+"Sheet 2":[    
  {
   "gregorian_day": 2,
   "gregorian_month": "يناير",
@@ -313,6 +293,7 @@
   "dhuhr_hour": "11",
   "maghrib_minute": 24,
   "maghrib_hour": "17",
+  "event": " مولد الإمام محمد الباقر  (ع) ",
   "status": "صالحة"
  },
  {
