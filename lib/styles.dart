@@ -1,4 +1,4 @@
-// styles.dart
+// prayertime/lib/styles.dart
 
 import 'package:flutter/material.dart';
 
