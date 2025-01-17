@@ -61,6 +61,7 @@ flutter:
     - assets/images/logo.png
     - assets/quran.json
     - assets/images/qmt.png
+    - assets/images/Clock.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
