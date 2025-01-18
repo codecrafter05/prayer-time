@@ -65,7 +65,7 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
   }
 
   void startCountdown() {
-    countdownTimer = Timer.periodic(Duration(minutes: 3), (timer) {
+    countdownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         _currentTime = DateTime.now();
       });
