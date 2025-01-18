@@ -5,6 +5,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:intl/intl.dart';
+import 'package:prayertime/prayer_notification_page.dart';
 
 class PrayerTimesPage extends StatefulWidget {
   @override
@@ -21,7 +22,6 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
 
   Duration? totalPrayerWindow;
 
-  // سنخزّن الوقت الحالي للساعة كي نرسم العقارب
   DateTime _currentTime = DateTime.now();
 
   final Map<String, String> englishToArabicMonths = {
@@ -55,7 +55,7 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
     loadPrayerTimes();
     calculateTimeUntilNextPrayer();
     loadDailyVerse();
-    startCountdown(); // سيحدّث الوقت كل ثانية ويقلل timeUntilNextPrayer
+    startCountdown();
   }
 
   @override
@@ -64,27 +64,42 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
     super.dispose();
   }
 
-  // -------------------------------------------
-  // تشغيل مؤقّت العدّ التنازلي + تحديث الوقت الحالي للساعة
-  // -------------------------------------------
   void startCountdown() {
-    // مؤقت يتكرر كل ثانية
-    countdownTimer = Timer.periodic(Duration(seconds: 1), (timer) {
-      // 1) تحدّث الوقت الحالي (لرسم العقارب)
+    countdownTimer = Timer.periodic(Duration(minutes: 3), (timer) {
       setState(() {
         _currentTime = DateTime.now();
       });
 
-      // 2) إذا بقي لدينا وقت حتى الصلاة التالية، قلّله ثانية
       if (timeUntilNextPrayer != null && timeUntilNextPrayer!.inSeconds > 0) {
         setState(() {
           timeUntilNextPrayer = timeUntilNextPrayer! - Duration(seconds: 1);
         });
       } else {
-        // إذا انتهى الوقت، نعيد حساب وقت الصلاة التالية ونستمر
         timer.cancel();
-        calculateTimeUntilNextPrayer();
-        startCountdown();
+
+        // 1) الانتقال لصفحة الإشعار
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PrayerNotificationPage(
+                prayerName: nextPrayerName ?? "الصلاة",
+              ),
+            ),
+          );
+
+          // 2) بعد 5 دقائق، إغلاق صفحة الإشعار
+          Future.delayed(Duration(seconds: 5), () {
+            // تأكّد أولًا أننا ما زلنا داخل التطبيق ولم يُغلق أو يُغادر الصفحة
+            if (mounted) {
+              Navigator.pop(context);
+            }
+
+            // 3) بعد العودة، نحسب وقت الصلاة التالية ونشغّل المؤقِّت من جديد
+            calculateTimeUntilNextPrayer();
+            startCountdown();
+          });
+        });
       }
     });
   }
