@@ -45,5 +45,22 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+<dict>
+  <!-- يسمح بالاتصالات HTTP لأي نطاق (لو أردت) -->
+  <key>NSAllowsArbitraryLoads</key>
+  <true/>
+
+  <!-- أو يمكنك الاكتفاء بفتح نطاق (IP) معيّن فقط -->
+  <key>NSExceptionDomains</key>
+  <dict>
+    <key>192.168.100.26</key>
+    <dict>
+      <key>NSExceptionAllowsInsecureHTTPLoads</key>
+      <true/>
+    </dict>
+  </dict>
+</dict>
+
 </dict>
 </plist>
