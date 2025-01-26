@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:intl/intl.dart';
 import 'package:prayertime/prayer_notification_page.dart';
+import 'package:http/http.dart' as http;
 
 class PrayerTimesPage extends StatefulWidget {
   @override
@@ -53,9 +54,14 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
   void initState() {
     super.initState();
     loadPrayerTimes();
+    fetchEvent(); // استدعاء أولي لجلب الحدث
     calculateTimeUntilNextPrayer();
     loadDailyVerse();
     startCountdown();
+
+    Timer.periodic(Duration(seconds: 5), (timer) {
+      fetchEvent(); // جلب الحدث كل دقيقة
+    });
   }
 
   @override
@@ -102,6 +108,29 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
         });
       }
     });
+  }
+
+  // -------------------------------------------
+  // Event Api
+  // -------------------------------------------
+  Future<void> fetchEvent() async {
+    try {
+      final response = await http.get(
+        Uri.parse('http://127.0.0.1:8000/api/event'),
+        headers: {'Cache-Control': 'no-cache'},
+      );
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        setState(() {
+          // نضع الحدث اليوم في todayData
+          todayData?['event'] = data['event'];
+        });
+      } else {
+        print('Failed to load event. Code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
   }
 
   // -------------------------------------------
