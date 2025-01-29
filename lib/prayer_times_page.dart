@@ -116,7 +116,7 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
   Future<void> fetchEvent() async {
     try {
       final response = await http.get(
-        Uri.parse('http://127.0.0.1:8000/api/event'),
+        Uri.parse('https://cctest.xyz/api/event'),
         headers: {'Cache-Control': 'no-cache'},
       );
       if (response.statusCode == 200) {
