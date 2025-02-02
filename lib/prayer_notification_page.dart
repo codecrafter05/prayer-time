@@ -37,7 +37,7 @@ class PrayerNotificationPage extends StatelessWidget {
             // نعرض النص في المنتصف
             child: Center(
               child: Text(
-                'حان موعد صلاة $prayerName',
+                'حان الآن موعد صلاة $prayerName',
                 style: TextStyle(
                   fontSize: 60,
                   color: Colors.white,

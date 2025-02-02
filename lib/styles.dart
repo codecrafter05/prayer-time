@@ -12,12 +12,10 @@ class AppStyles {
   static const TextStyle prayerNameTextStyle = TextStyle(
     fontSize: 40,
     color: primaryTextColor,
-    fontFamily: 'Arabic',
   );
 
   static const TextStyle prayerTimeTextStyle = TextStyle(
     fontSize: 36,
     color: secondaryTextColor,
-    fontFamily: 'Digital',
   );
 }
