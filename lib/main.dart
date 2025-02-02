@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Prayer Time App',
       theme: ThemeData(
+        fontFamily: 'Almarai', // تعيين الخط الافتراضي للتطبيق
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         scaffoldBackgroundColor:
             AppStyles.backgroundColor, // تعيين لون الخلفية للتطبيق

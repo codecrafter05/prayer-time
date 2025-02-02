@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:math';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:intl/intl.dart';
 import 'package:prayertime/prayer_notification_page.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter/material.dart';
 
 class PrayerTimesPage extends StatefulWidget {
   @override
@@ -312,17 +312,35 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // (اليسار) العد التنازلي + شريط التقدم
+                    // (اليسار) العد التنازلي
                     _buildLeftSection(),
 
-                    // (الوسط) الساعة
                     Expanded(
-                      child: Center(
-                        child: _buildClockSection(),
+                      child: Stack(
+                        alignment: Alignment.center,
+                        clipBehavior: Clip.none, // لمنع قص المحتويات
+                        children: [
+                          // خلفية الساعة الرقمية
+                          Transform.translate(
+                            offset: Offset(
+                              0,
+                              MediaQuery.of(context).size.height *
+                                  0.12, // تحريك الصورة لأسفل 10% من ارتفاع الشاشة
+                            ),
+                            child: Image.asset(
+                              'assets/images/Picture1.png',
+                              fit: BoxFit.contain,
+                              width: MediaQuery.of(context).size.width *
+                                  0.5, // عرض نسبي للصورة
+                            ),
+                          ),
+                          // محتوى الساعة
+                          _buildClockSection(),
+                        ],
                       ),
                     ),
 
-                    // (اليمين) اليوم + التاريخ + المناسبة
+                    // (اليمين) اليوم + المناسبة
                     _buildRightDateSection(),
                   ],
                 ),
@@ -347,7 +365,7 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
   // -------------------------------------------
   Widget _buildLeftSection() {
     return Padding(
-      padding: const EdgeInsets.only(top: 100.0),
+      padding: const EdgeInsets.only(top: 350.0),
       child: Container(
         width: MediaQuery.of(context).size.width * 0.3,
         alignment: Alignment.topCenter,
@@ -356,14 +374,14 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
           children: [
             if (nextPrayerName != null) ...[
               Text(
-                'الوقت المتبقي لصلاة $nextPrayerName',
+                ' المتبقي لصلاة $nextPrayerName',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 50,
-                  color: Colors.white,
-                ),
+                    fontSize: 50,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 150),
+              SizedBox(height: 15),
             ],
             if (timeUntilNextPrayer != null) ...[
               Text(
@@ -377,19 +395,6 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
                 ),
               ),
             ],
-            SizedBox(height: 200),
-            Container(
-              width: MediaQuery.of(context).size.width * 0.25,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(25),
-                child: LinearProgressIndicator(
-                  value: _calculateProgressValue(),
-                  backgroundColor: Colors.grey[300],
-                  color: const ui.Color.fromARGB(255, 5, 2, 18),
-                  minHeight: 50,
-                ),
-              ),
-            ),
           ],
         ),
       ),
@@ -405,80 +410,129 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
   }
 
   // -------------------------------------------
-  // (وسط) الساعة + العقارب
+  // (وسط) الساعة الرقمية مع اسم اليوم والتاريخ
   // -------------------------------------------
   Widget _buildClockSection() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 200.0),
-      child: SizedBox(
-        width: 400,
-        height: 400,
-        child: Stack(
+    final now = DateTime.now();
+    final hour = now.hour % 12 == 0 ? 12 : now.hour % 12;
+    final minute = now.minute.toString().padLeft(2, '0');
+    final second = now.second.toString().padLeft(2, '0');
+    final period = now.hour >= 12 ? "مساءً" : "صباحاً";
+
+    String dayName = todayData?['day_of_week'] ?? '';
+    String hijriDate = todayData != null
+        ? '${todayData!['hijri_day']} ${todayData!['hijri_month_name']} ${todayData!['hijri_year']}'
+        : '';
+    String gregorianDate = todayData != null
+        ? '${todayData!['gregorian_day']} ${todayData!['gregorian_month']} ${todayData!['gregorian_year']}'
+        : '';
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        // اسم اليوم
+        if (dayName.isNotEmpty)
+          Text(
+            dayName,
+            style: TextStyle(
+              fontSize: 70,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+        const SizedBox(height: 90),
+
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          textDirection:
+              ui.TextDirection.rtl, // اتجاه النص من اليمين إلى اليسار
           children: [
-            // خلفية صورة الساعة
-            Container(
-              width: 400,
-              height: 400,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/Clock.png'),
-                  fit: BoxFit.contain,
+            // التاريخ الهجري
+            if (hijriDate.isNotEmpty)
+              Text(
+                hijriDate,
+                style: TextStyle(
+                  fontSize: 50,
+                  color: Colors.white,
                 ),
+                textDirection: ui.TextDirection.rtl, // تأكيد الاتجاه RTL
               ),
-            ),
-            // رسم العقارب
-            CustomPaint(
-              size: Size(400, 400),
-              painter: _ClockHandsPainter(_currentTime),
-            ),
+            // التاريخ الميلادي
+            if (gregorianDate.isNotEmpty)
+              Text(
+                gregorianDate,
+                style: TextStyle(
+                  fontSize: 50,
+                  color: Colors.white,
+                ),
+                textDirection: ui.TextDirection.rtl, // تأكيد الاتجاه RTL
+              ),
           ],
         ),
-      ),
+
+        const SizedBox(height: 150),
+
+        // الساعة الرقمية
+        RichText(
+          text: TextSpan(
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+            children: [
+              TextSpan(
+                text: "$hour:$minute ",
+                style: TextStyle(fontSize: 110),
+              ),
+              TextSpan(
+                text: second,
+                style: TextStyle(fontSize: 60),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 10),
+
+        // صباحاً أو مساءً
+        Text(
+          period,
+          style: TextStyle(
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+      ],
     );
   }
 
   // -------------------------------------------
-  // (اليمين) اليوم + التاريخ + المناسبة
+  // (اليمين) المناسبة
   // -------------------------------------------
   Widget _buildRightDateSection() {
-    String dayName = todayData?['day_of_week'] ?? '';
     String? eventName = todayData?['event'];
 
     return Padding(
-      padding: const EdgeInsets.only(top: 100.0),
+      padding: const EdgeInsets.only(top: 350.0),
       child: Container(
         width: MediaQuery.of(context).size.width * 0.3,
         alignment: Alignment.topCenter,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (dayName.isNotEmpty) ...[
-              Text(
-                dayName,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 70,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 90),
-            ],
-            if (combinedDate != null) ...[
-              Text(
-                combinedDate!,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 50,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 90),
-            ],
             if (eventName != null) ...[
               Text(
-                'مناسبة اليوم\n$eventName',
+                'مناسبة اليوم',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 50,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 15), // مسافة بين النصوص
+              Text(
+                eventName,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 50,
@@ -540,10 +594,7 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
         Text(
           prayerName,
           style: TextStyle(
-            fontSize: 50,
-            color: Colors.white,
-            fontWeight: FontWeight.normal,
-          ),
+              fontSize: 50, color: Colors.white, fontWeight: FontWeight.bold),
         ),
         SizedBox(height: 15),
         Text(
@@ -551,7 +602,8 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
           style: TextStyle(
             fontSize: 52,
             color: Colors.white,
-            fontWeight: FontWeight.bold,
+            fontFamily: 'Almarai',
+            fontWeight: FontWeight.w800,
           ),
         ),
       ],
@@ -575,89 +627,5 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
         textAlign: TextAlign.center,
       ),
     );
-  }
-
-  // -------------------------------------------
-  // يحسب نسبة التقدم بين الصلاة السابقة والحالية
-  // -------------------------------------------
-  double _calculateProgressValue() {
-    if (timeUntilNextPrayer == null || totalPrayerWindow == null) {
-      return 0.0;
-    }
-
-    double remainingSec = timeUntilNextPrayer!.inSeconds.toDouble();
-    double totalSec = totalPrayerWindow!.inSeconds.toDouble();
-
-    double progress = 1 - (remainingSec / totalSec);
-
-    if (progress < 0) progress = 0;
-    if (progress > 1) progress = 1;
-    return progress;
-  }
-}
-
-// =====================================================================
-// رسّام مخصّص لرسم العقارب فوق صورة الساعة
-// =====================================================================
-class _ClockHandsPainter extends CustomPainter {
-  final DateTime now;
-  _ClockHandsPainter(this.now);
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final center = Offset(size.width / 2, size.height / 2);
-
-    // حساب الزوايا
-    // الزاوية بالدرجات = (القيمة / الحد الأقصى) * 360
-    // الدقائق والثواني: من 0 إلى 59
-    // الساعات: من 0 إلى 12
-    final seconds = now.second + (now.millisecond / 1000.0);
-    final minutes = now.minute + (seconds / 60.0);
-    final hours = (now.hour % 12) + (minutes / 60.0);
-
-    // الزوايا (بالراديان)
-    final secondAngle = (seconds * 6) * (pi / 180);
-    final minuteAngle = (minutes * 6) * (pi / 180);
-    final hourAngle = (hours * 30) * (pi / 180);
-
-    // طول العقارب
-    final radius = size.width * 0.4; // أو حسب رغبتك
-    final hourHandLength = radius * 0.5;
-    final minuteHandLength = radius * 0.7;
-    final secondHandLength = radius * 0.8;
-
-    // فرش الرسم
-    final hourPaint = Paint()
-      ..color = const ui.Color.fromARGB(255, 0, 0, 0)
-      ..strokeWidth = 5
-      ..strokeCap = StrokeCap.round;
-    final minutePaint = Paint()
-      ..color = const ui.Color.fromARGB(255, 0, 0, 0)
-      ..strokeWidth = 3
-      ..strokeCap = StrokeCap.round;
-    final secondPaint = Paint()
-      ..color = Colors.red
-      ..strokeWidth = 2
-      ..strokeCap = StrokeCap.round;
-
-    // رسم عقرب الساعات
-    final hourX = center.dx + hourHandLength * sin(hourAngle);
-    final hourY = center.dy - hourHandLength * cos(hourAngle);
-    canvas.drawLine(center, Offset(hourX, hourY), hourPaint);
-
-    // رسم عقرب الدقائق
-    final minX = center.dx + minuteHandLength * sin(minuteAngle);
-    final minY = center.dy - minuteHandLength * cos(minuteAngle);
-    canvas.drawLine(center, Offset(minX, minY), minutePaint);
-
-    // رسم عقرب الثواني
-    final secX = center.dx + secondHandLength * sin(secondAngle);
-    final secY = center.dy - secondHandLength * cos(secondAngle);
-    canvas.drawLine(center, Offset(secX, secY), secondPaint);
-  }
-
-  @override
-  bool shouldRepaint(_ClockHandsPainter oldDelegate) {
-    return oldDelegate.now != now;
   }
 }
