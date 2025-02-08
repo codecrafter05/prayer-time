@@ -65,6 +65,7 @@ flutter:
     - assets/images/time-row.png
     - assets/images/icon.png
     - assets/images/Picture1.png
+    - assets/hadith.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

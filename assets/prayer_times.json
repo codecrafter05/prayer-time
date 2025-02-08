@@ -660,6 +660,7 @@
   "dhuhr_hour": "11",
   "maghrib_minute": 39,
   "maghrib_hour": "17",
+  "event": " مولد علي الأكبر (ع)",
   "status": "صالحة"
  },
  {
@@ -676,7 +677,7 @@
   "sunrise_hour": "6",
   "dhuhr_minute": "52",
   "dhuhr_hour": "11",
-  "maghrib_minute": 39,
+  "maghrib_minute": "40",
   "maghrib_hour": "17",
   "status": "صالحة"
  },
@@ -730,7 +731,7 @@
   "sunrise_hour": "6",
   "dhuhr_minute": "52",
   "dhuhr_hour": "11",
-  "maghrib_minute": 41,
+  "maghrib_minute": 42,
   "maghrib_hour": "17",
   "event": " مولدعلي الأكبر (ع)",
   "status": "صالحة"
@@ -749,7 +750,7 @@
   "sunrise_hour": "6",
   "dhuhr_minute": "52",
   "dhuhr_hour": "11",
-  "maghrib_minute": 42,
+  "maghrib_minute": 43,
   "maghrib_hour": "17",
   "status": "غير صالحة"
  },
@@ -785,7 +786,7 @@
   "sunrise_hour": "6",
   "dhuhr_minute": "52",
   "dhuhr_hour": "11",
-  "maghrib_minute": 43,
+  "maghrib_minute": 44,
   "maghrib_hour": "17",
   "event": " ",
   "status": "صالحة"
@@ -804,7 +805,7 @@
   "sunrise_hour": "6",
   "dhuhr_minute": "52",
   "dhuhr_hour": "11",
-  "maghrib_minute": 44,
+  "maghrib_minute": 45,
   "maghrib_hour": "17",
   "event": " مولد الإمام الحجة - عجل الله فرجه",
   "status": "غير صالحة"
@@ -841,7 +842,7 @@
   "sunrise_hour": "6",
   "dhuhr_minute": "52",
   "dhuhr_hour": "11",
-  "maghrib_minute": 45,
+  "maghrib_minute": 46,
   "maghrib_hour": "17",
   "status": "صالحة"
  },
@@ -859,7 +860,7 @@
   "sunrise_hour": "6",
   "dhuhr_minute": "52",
   "dhuhr_hour": "11",
-  "maghrib_minute": 46,
+  "maghrib_minute": 47,
   "maghrib_hour": "17",
   "status": "صالحة"
  },
@@ -895,7 +896,7 @@
   "sunrise_hour": "6",
   "dhuhr_minute": "52",
   "dhuhr_hour": "11",
-  "maghrib_minute": 47,
+  "maghrib_minute": 48,
   "maghrib_hour": "17",
   "status": "غير صالحة"
  },
@@ -949,7 +950,7 @@
   "sunrise_hour": "6",
   "dhuhr_minute": "51",
   "dhuhr_hour": "11",
-  "maghrib_minute": 49,
+  "maghrib_minute": 50,
   "maghrib_hour": "17",
   "status": "غير صالحة"
  },
@@ -1003,7 +1004,7 @@
   "sunrise_hour": "6",
   "dhuhr_minute": "51",
   "dhuhr_hour": "11",
-  "maghrib_minute": 51,
+  "maghrib_minute": 52,
   "maghrib_hour": "17",
   "status": "صالحة"
  },
@@ -1039,7 +1040,7 @@
   "sunrise_hour": "6",
   "dhuhr_minute": "51",
   "dhuhr_hour": "11",
-  "maghrib_minute": 52,
+  "maghrib_minute": 53,
   "maghrib_hour": "17",
   "status": "صالحة"
  },
