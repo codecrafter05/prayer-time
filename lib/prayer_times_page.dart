@@ -378,13 +378,15 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
                   ],
                 ),
               ),
-              _buildDailyHadithSection(),
+
+              // آية اليوم في الوسط
+              _buildDailyVerseSection(),
 
               // شريط أوقات الصلاة
               _buildTimeRowSection(),
 
-              // آية اليوم في الأسفل
-              _buildDailyVerseSection(),
+              // حديث اليوم في الأسفل
+              _buildDailyHadithSection(),
             ],
           ),
         ),
@@ -493,7 +495,7 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
 
             // عنصر فارغ يفصل بين التاريخين
             if (hijriDate.isNotEmpty && gregorianDate.isNotEmpty)
-              SizedBox(width: 135), // يمكنك تغيير القيمة حسب المسافة المطلوبة
+              SizedBox(width: 115), // يمكنك تغيير القيمة حسب المسافة المطلوبة
 
             if (gregorianDate.isNotEmpty)
               Text(
