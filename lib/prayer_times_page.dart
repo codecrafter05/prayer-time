@@ -7,12 +7,14 @@ import 'package:intl/intl.dart';
 import 'package:prayertime/prayer_notification_page.dart';
 
 class PrayerTimesPage extends StatefulWidget {
+  final String mosqueName;
+  const PrayerTimesPage({super.key, required this.mosqueName});
+
   @override
   _PrayerTimesPageState createState() => _PrayerTimesPageState();
 }
 
 class _PrayerTimesPageState extends State<PrayerTimesPage> {
-  // بيانات اليوم (من ملف JSON)
   Map<String, dynamic>? todayData;
   String? combinedDate;
   Duration? timeUntilNextPrayer;
@@ -24,7 +26,6 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
   Timer? _refreshTimer;
   String? dailyHadith;
 
-  // تحويل الأشهر من إنجليزي إلى عربي
   final Map<String, String> englishToArabicMonths = {
     'January': 'يناير',
     'February': 'فبراير',
@@ -40,7 +41,6 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
     'December': 'ديسمبر',
   };
 
-  // تحويل أيام الأسبوع من إنجليزي إلى عربي
   final Map<String, String> englishToArabicDays = {
     'Sunday': 'الأحد',
     'Monday': 'الإثنين',
@@ -54,17 +54,14 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
   @override
   void initState() {
     super.initState();
-
     loadPrayerTimes().then((_) {
       calculateTimeUntilNextPrayer();
       startCountdown();
     });
     loadDailyVerse();
-
     _refreshTimer = Timer.periodic(const Duration(seconds: 5), (timer) {
       _fetchAndUpdateData();
     });
-
     _loadDailyHadith();
   }
 
@@ -342,10 +339,15 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // يمكنك أيضًا وضع اسم المسجد في العنوان:
+      appBar: AppBar(
+        title: Text('أوقات الصلاة لـ ${widget.mosqueName}'),
+        centerTitle: true,
+      ),
       body: Container(
         decoration: BoxDecoration(
           border: Border.all(color: Colors.white, width: 7),
-          image: DecorationImage(
+          image: const DecorationImage(
             image: AssetImage('assets/images/back.png'),
             fit: BoxFit.cover,
           ),
@@ -353,16 +355,23 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
         child: SafeArea(
           child: Column(
             children: [
-              // القسم العلوي
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Text(
+                  'مسجد: ${widget.mosqueName}',
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // (اليسار) العد التنازلي
                     _buildLeftSection(),
-
-                    // (الوسط) الساعة + التاريخ
                     Expanded(
                       child: Stack(
                         alignment: Alignment.center,
@@ -372,20 +381,12 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
                         ],
                       ),
                     ),
-
-                    // (اليمين) اليوم + المناسبة
                     _buildRightDateSection(),
                   ],
                 ),
               ),
-
-              // آية اليوم في الوسط
               _buildDailyVerseSection(),
-
-              // شريط أوقات الصلاة
               _buildTimeRowSection(),
-
-              // حديث اليوم في الأسفل
               _buildDailyHadithSection(),
             ],
           ),
