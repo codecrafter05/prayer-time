@@ -1,26 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'welcome_page.dart';
 import 'prayer_times_page.dart';
-import 'styles.dart'; // استيراد AppStyles
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
+  final didSeeWelcome = prefs.getBool('didSeeWelcome') ?? false;
+  final chosenMosque = prefs.getString('chosenMosque') ?? 'مسجد افتراضي';
+
+  runApp(MyApp(
+    didSeeWelcome: didSeeWelcome,
+    chosenMosque: chosenMosque,
+  ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool didSeeWelcome;
+  final String chosenMosque;
+  const MyApp({
+    Key? key,
+    required this.didSeeWelcome,
+    required this.chosenMosque,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Prayer Time App',
-      theme: ThemeData(
-        fontFamily: 'Almarai', // تعيين الخط الافتراضي للتطبيق
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        scaffoldBackgroundColor:
-            AppStyles.backgroundColor, // تعيين لون الخلفية للتطبيق
-        useMaterial3: true,
-      ),
-      home: PrayerTimesPage(),
+      home: didSeeWelcome
+          ? PrayerTimesPage(mosqueName: chosenMosque)
+          : WelcomePage(),
     );
   }
 }
