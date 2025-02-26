@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:prayertime/prayer_notification_page.dart';
 
@@ -25,6 +26,10 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
   String? dailyVerse;
   Timer? _refreshTimer;
   String? dailyHadith;
+
+  List<String> imageUrls = [];
+  int currentIndex = 0;
+  Timer? _imageTimer;
 
   final Map<String, String> englishToArabicMonths = {
     'January': 'يناير',
@@ -63,6 +68,8 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
       _fetchAndUpdateData();
     });
     _loadDailyHadith();
+    fetchImages();
+    startImageLoop();
   }
 
   Future<void> _fetchAndUpdateData() async {
@@ -76,7 +83,37 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
   void dispose() {
     _refreshTimer?.cancel();
     countdownTimer?.cancel();
+    _imageTimer?.cancel();
     super.dispose();
+  }
+
+  Future<void> fetchImages() async {
+    try {
+      final response = await http.get(
+        Uri.parse(
+            'http://127.0.0.1:8000/api/user/images-by-mosque?mosqueName=${widget.mosqueName}'),
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        setState(() {
+          imageUrls = List<String>.from(
+              data['images'].map((image) => image['url'].toString()));
+        });
+      } else {
+        print("⚠️ فشل تحميل الصور من API");
+      }
+    } catch (e) {
+      print("خطأ أثناء جلب الصور: $e");
+    }
+  }
+
+  void startImageLoop() {
+    Timer.periodic(Duration(seconds: 5), (timer) {
+      setState(() {
+        currentIndex = (currentIndex + 1) % imageUrls.length;
+      });
+    });
   }
 
   // -------------------------------------------------------------------------
@@ -513,10 +550,34 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
-        child: Image.asset(
-          'assets/images/images.jpeg',
-          fit: BoxFit.cover,
-        ),
+        child: imageUrls.isNotEmpty
+            ? Image.network(
+                imageUrls[currentIndex],
+                key: ValueKey(imageUrls[
+                    currentIndex]), // يجبر Flutter على تحديث الصورة عند التغيير
+                fit: BoxFit.cover,
+                headers: {
+                  "Access-Control-Allow-Origin": "*"
+                }, // ✅ السماح بتحميل الصور
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return const Center(child: CircularProgressIndicator());
+                },
+                errorBuilder: (context, error, stackTrace) {
+                  print(
+                      "⚠️ فشل تحميل الصورة: ${imageUrls[currentIndex]}"); // ✅ طباعة الخطأ في Debug Console
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.error, size: 50, color: Colors.red),
+                      SizedBox(height: 10),
+                      Text("فشل تحميل الصورة",
+                          style: TextStyle(color: Colors.white)),
+                    ],
+                  );
+                },
+              )
+            : const Center(child: CircularProgressIndicator()),
       ),
     );
   }
