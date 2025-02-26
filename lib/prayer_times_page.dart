@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:prayertime/prayer_notification_page.dart';
 
@@ -25,6 +26,10 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
   String? dailyVerse;
   Timer? _refreshTimer;
   String? dailyHadith;
+
+  List<String> imageUrls = [];
+  int currentIndex = 0;
+  Timer? _imageTimer;
 
   final Map<String, String> englishToArabicMonths = {
     'January': 'يناير',
@@ -63,6 +68,8 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
       _fetchAndUpdateData();
     });
     _loadDailyHadith();
+    fetchImages();
+    startImageLoop();
   }
 
   Future<void> _fetchAndUpdateData() async {
@@ -76,7 +83,37 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
   void dispose() {
     _refreshTimer?.cancel();
     countdownTimer?.cancel();
+    _imageTimer?.cancel();
     super.dispose();
+  }
+
+  Future<void> fetchImages() async {
+    try {
+      final response = await http.get(
+        Uri.parse(
+            'http://127.0.0.1:8000/api/user/images-by-mosque?mosqueName=${widget.mosqueName}'),
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        setState(() {
+          imageUrls = List<String>.from(
+              data['images'].map((image) => image['url'].toString()));
+        });
+      } else {
+        print("⚠️ فشل تحميل الصور من API");
+      }
+    } catch (e) {
+      print("خطأ أثناء جلب الصور: $e");
+    }
+  }
+
+  void startImageLoop() {
+    Timer.periodic(Duration(seconds: 5), (timer) {
+      setState(() {
+        currentIndex = (currentIndex + 1) % imageUrls.length;
+      });
+    });
   }
 
   // -------------------------------------------------------------------------
@@ -339,11 +376,6 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // يمكنك أيضًا وضع اسم المسجد في العنوان:
-      appBar: AppBar(
-        title: Text('أوقات الصلاة لـ ${widget.mosqueName}'),
-        centerTitle: true,
-      ),
       body: Container(
         decoration: BoxDecoration(
           border: Border.all(color: Colors.white, width: 7),
@@ -371,23 +403,22 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildLeftSection(),
                     Expanded(
                       child: Stack(
                         alignment: Alignment.center,
                         clipBehavior: Clip.none,
                         children: [
                           _buildClockSection(),
+                          _buildImageBox(),
+                          _buildDailyVerseBox(),
                         ],
                       ),
                     ),
-                    _buildRightDateSection(),
                   ],
                 ),
               ),
-              _buildDailyVerseSection(),
               _buildTimeRowSection(),
-              _buildDailyHadithSection(),
+              _buildRightBoxesRow(),
             ],
           ),
         ),
@@ -396,187 +427,203 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
   }
 
   // -------------------------------------------------------------------------
-  // (اليسار) العد التنازلي
-  // -------------------------------------------------------------------------
-  Widget _buildLeftSection() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 200.0),
-      child: Container(
-        width: MediaQuery.of(context).size.width * 0.3,
-        alignment: Alignment.topCenter,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (nextPrayerName != null) ...[
-              Text(
-                'المتبقي لصلاة $nextPrayerName',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 30,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 15),
-            ],
-            if (timeUntilNextPrayer != null) ...[
-              Text(
-                _formatDuration(timeUntilNextPrayer!),
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 30,
-                  color: Colors.white,
-                  fontFamily: 'Digital',
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ],
-        ),
-      ),
-    );
-  }
-
-  /// تحويل مدة زمنية إلى صيغة "HH:MM:SS"
-  String _formatDuration(Duration d) {
-    String hh = d.inHours.toString().padLeft(2, '0');
-    String mm = (d.inMinutes % 60).toString().padLeft(2, '0');
-    String ss = (d.inSeconds % 60).toString().padLeft(2, '0');
-    return '$hh:$mm:$ss';
-  }
-
-  // -------------------------------------------------------------------------
-  // (الوسط) الساعة الرقمية + اليوم + التاريخ
+  //  المربع اليمين
   // -------------------------------------------------------------------------
   Widget _buildClockSection() {
+    // حساب الوقت بصيغة 12 ساعة
     final hour = _currentTime.hour % 12 == 0 ? 12 : _currentTime.hour % 12;
     final minute = _currentTime.minute.toString().padLeft(2, '0');
     final second = _currentTime.second.toString().padLeft(2, '0');
-    final period = _currentTime.hour >= 12 ? "مساءً" : "صباحاً";
+    final period = _currentTime.hour >= 12 ? "PM" : "AM";
 
+    // استخراج بيانات اليوم من todayData
     String dayName = todayData?['day_of_week'] ?? '';
+    String gregorianDate = (todayData == null)
+        ? ''
+        : '${todayData!['gregorian_day']} ${todayData!['gregorian_month']} ${todayData!['gregorian_year']}';
     String hijriDate = (todayData == null)
         ? ''
         : '${todayData!['hijri_day']} ${todayData!['hijri_month_name']} ${todayData!['hijri_year']}';
 
-    String gregorianDate = (todayData == null)
-        ? ''
-        : '${todayData!['gregorian_day']} ${todayData!['gregorian_month']} ${todayData!['gregorian_year']}';
-
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        // اسم اليوم
-        if (dayName.isNotEmpty)
-          Text(
-            dayName,
-            style: TextStyle(
-              fontSize: 50,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
-        SizedBox(height: 50),
-
-        // التاريخ الهجري والميلادي
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center, // أو حسب ما تريد
-          textDirection: ui.TextDirection.rtl,
+    return Align(
+      alignment: Alignment.topRight,
+      child: Container(
+        // تصغير حجم المربع
+        width: MediaQuery.of(context).size.width * 0.2,
+        height: 400,
+        padding: const EdgeInsets.all(16.0),
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.2), // خلفية نصف شفافة
+          borderRadius: BorderRadius.circular(16), // حواف مقوسة
+          border: Border.all(color: Colors.white, width: 2),
+        ),
+        child: Column(
+          // لجعل جميع العناصر في المنتصف
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            if (hijriDate.isNotEmpty)
+            // 1) اسم اليوم
+            if (dayName.isNotEmpty)
               Text(
-                hijriDate,
-                style: TextStyle(
-                  fontSize: 30,
+                dayName,
+                style: const TextStyle(
+                  fontSize: 50,
+                  fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
-                textDirection: ui.TextDirection.rtl,
+                textAlign: TextAlign.center,
               ),
+            const SizedBox(height: 15),
 
-            // عنصر فارغ يفصل بين التاريخين
-            if (hijriDate.isNotEmpty && gregorianDate.isNotEmpty)
-              SizedBox(width: 115), // يمكنك تغيير القيمة حسب المسافة المطلوبة
+            // 2) الساعة الزمنية
+            _buildClockWithPeriod(hour, minute, second, period),
+            const SizedBox(height: 15),
 
+            // 3) التاريخ الميلادي
             if (gregorianDate.isNotEmpty)
               Text(
                 gregorianDate,
-                style: TextStyle(
-                  fontSize: 30,
+                style: const TextStyle(
+                  fontSize: 28,
                   color: Colors.white,
+                  fontWeight: FontWeight.bold,
                 ),
-                textDirection: ui.TextDirection.rtl,
+                textAlign: TextAlign.center,
+              ),
+            const SizedBox(height: 10),
+
+            // 4) التاريخ الهجري
+            if (hijriDate.isNotEmpty)
+              Text(
+                hijriDate,
+                style: const TextStyle(
+                  fontSize: 28,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
               ),
           ],
         ),
+      ),
+    );
+  }
 
-        SizedBox(height: 30),
-
-        // الساعة الرقمية
-        RichText(
-          text: TextSpan(
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-            children: [
-              TextSpan(
-                text: "$hour:$minute ",
-                style: TextStyle(fontSize: 80),
-              ),
-              TextSpan(
-                text: second,
-                style: TextStyle(fontSize: 60),
-              ),
-            ],
-          ),
+  Widget _buildClockWithPeriod(
+    int hour,
+    String minute,
+    String second,
+    String period,
+  ) {
+    return RichText(
+      textAlign: TextAlign.center,
+      text: TextSpan(
+        style: const TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
         ),
-        SizedBox(height: 10),
-
-        // صباحًا أو مساءً
-        Text(
-          period,
-          style: TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
+        children: [
+          TextSpan(
+            text: "$hour:$minute:$second ",
+            style: const TextStyle(fontSize: 45),
           ),
-        ),
-      ],
+          TextSpan(
+            text: period,
+            style: const TextStyle(fontSize: 25),
+          ),
+        ],
+      ),
     );
   }
 
   // -------------------------------------------------------------------------
-  // (اليمين) المناسبة
+  // المربع وسط الصوره
   // -------------------------------------------------------------------------
-  Widget _buildRightDateSection() {
-    String? eventName = todayData?['event'];
-    return Padding(
-      padding: const EdgeInsets.only(top: 200.0),
+  Widget _buildImageBox() {
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.4,
+      height: 400,
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.2),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Colors.white, width: 2),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16),
+        child: imageUrls.isNotEmpty
+            ? Image.network(
+                imageUrls[currentIndex],
+                key: ValueKey(imageUrls[
+                    currentIndex]), // يجبر Flutter على تحديث الصورة عند التغيير
+                fit: BoxFit.cover,
+                headers: {
+                  "Access-Control-Allow-Origin": "*"
+                }, // ✅ السماح بتحميل الصور
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return const Center(child: CircularProgressIndicator());
+                },
+                errorBuilder: (context, error, stackTrace) {
+                  print(
+                      "⚠️ فشل تحميل الصورة: ${imageUrls[currentIndex]}"); // ✅ طباعة الخطأ في Debug Console
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.error, size: 50, color: Colors.red),
+                      SizedBox(height: 10),
+                      Text("فشل تحميل الصورة",
+                          style: TextStyle(color: Colors.white)),
+                    ],
+                  );
+                },
+              )
+            : const Center(child: CircularProgressIndicator()),
+      ),
+    );
+  }
+
+  // -------------------------------------------------------------------------
+  // المربع  يسار
+  // -------------------------------------------------------------------------
+  Widget _buildDailyVerseBox() {
+    return Align(
+      alignment: Alignment.topLeft,
       child: Container(
-        width: MediaQuery.of(context).size.width * 0.3,
-        alignment: Alignment.topCenter,
+        width: MediaQuery.of(context).size.width * 0.2,
+        height: 400,
+        padding: const EdgeInsets.all(16.0),
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.2),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: Colors.white, width: 2),
+        ),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              'مناسبة اليوم',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 30,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
+            if (dailyVerse == null)
+              const Text(
+                'جاري تحميل الآية...',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              )
+            else
+              Text(
+                dailyVerse!,
+                style: const TextStyle(
+                  fontSize: 25,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+                softWrap: true,
+                maxLines: 5,
+                overflow: TextOverflow.ellipsis,
               ),
-            ),
-            const SizedBox(height: 15),
-            Text(
-              eventName ?? 'لا يوجد',
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 30,
-                color: Colors.white,
-              ),
-            ),
           ],
         ),
       ),
@@ -589,32 +636,37 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
   Widget _buildTimeRowSection() {
     return Container(
       height: 130,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/images/time-row.png'),
-          fit: BoxFit.cover,
-        ),
-        border: Border.all(color: Colors.white, width: 3),
-      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          _buildPrayerTimeItem(
+          _buildCountdownBoxItem(), // عنصر العد التنازلي
+          _buildPrayerBoxItem(
+            'العشاء',
+            "20",
+            "00",
+          ),
+
+          _buildPrayerBoxItem(
             'المغرب',
             todayData?['maghrib_hour'],
             todayData?['maghrib_minute'],
           ),
-          _buildPrayerTimeItem(
+          _buildPrayerBoxItem(
+            'العصر',
+            "20",
+            "00",
+          ),
+          _buildPrayerBoxItem(
             'الظهر',
             todayData?['dhuhr_hour'],
             todayData?['dhuhr_minute'],
           ),
-          _buildPrayerTimeItem(
+          _buildPrayerBoxItem(
             'الشروق',
             todayData?['sunrise_hour'],
             todayData?['sunrise_minute'],
           ),
-          _buildPrayerTimeItem(
+          _buildPrayerBoxItem(
             'الفجر',
             todayData?['fajr_hour'],
             todayData?['fajr_minute'],
@@ -624,56 +676,126 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
     );
   }
 
-  /// عنصر واحد في شريط أوقات الصلاة
-  Widget _buildPrayerTimeItem(String prayerName, dynamic hour, dynamic minute) {
+  Widget _buildCountdownBoxItem() {
+    String countdownText = timeUntilNextPrayer != null
+        ? _formatDuration(timeUntilNextPrayer!)
+        : "00:00:00";
+    return Container(
+      padding: EdgeInsets.all(8.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: const ui.Color.fromARGB(255, 197, 191, 109),
+          width: 2,
+        ),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'الوقت المتبقي لصلاة',
+            style: TextStyle(
+              fontSize: 30,
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 8),
+          Text(
+            countdownText,
+            style: TextStyle(
+              fontSize: 32,
+              color: Colors.black,
+              fontFamily: 'Digital',
+              fontWeight: FontWeight.w800,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPrayerBoxItem(String prayerName, dynamic hour, dynamic minute) {
     String displayTime = '';
     if (hour != null && minute != null) {
       int hourInt = int.parse(hour.toString());
       int minuteInt = int.parse(minute.toString());
-
-      // تحويل 24-ساعة إلى 12-ساعة
       int hour12 = hourInt > 12 ? hourInt - 12 : (hourInt == 0 ? 12 : hourInt);
       String period = hourInt >= 12 ? 'PM' : 'AM';
-
       displayTime =
           '${hour12.toString().padLeft(2, '0')}:${minuteInt.toString().padLeft(2, '0')} $period';
     }
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          prayerName,
-          style: TextStyle(
-            fontSize: 30,
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
+    return Container(
+      padding: EdgeInsets.all(8.0),
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/images/time-row.png'),
+          fit: BoxFit.cover,
         ),
-        SizedBox(height: 15),
-        Text(
-          displayTime,
-          style: TextStyle(
-            fontSize: 32,
-            color: Colors.white,
-            fontFamily: 'Almarai',
-            fontWeight: FontWeight.w800,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Colors.white, width: 2),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            prayerName,
+            style: TextStyle(
+              fontSize: 30,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
           ),
-        ),
-      ],
+          SizedBox(height: 8),
+          Text(
+            displayTime,
+            style: TextStyle(
+              fontSize: 32,
+              color: Colors.white,
+              fontFamily: 'Almarai',
+              fontWeight: FontWeight.w800,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
     );
   }
 
+  String _formatDuration(Duration d) {
+    String hh = d.inHours.toString().padLeft(2, '0');
+    String mm = (d.inMinutes % 60).toString().padLeft(2, '0');
+    String ss = (d.inSeconds % 60).toString().padLeft(2, '0');
+    return '$hh:$mm:$ss';
+  }
+
   // -------------------------------------------------------------------------
-  // آية اليوم في الأسفل
+  // شريط السفلي الحذيث + المناسبات
   // -------------------------------------------------------------------------
-  Widget _buildDailyVerseSection() {
-    if (dailyVerse == null) return SizedBox.shrink();
+  Widget _buildRightDateSection() {
+    String eventName = todayData?['event'] ?? 'لا يوجد';
+
     return Container(
-      padding: EdgeInsets.all(25),
+      margin: const EdgeInsets.only(
+        top: 40.0,
+      ),
+      padding: const EdgeInsets.all(16.0),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.2),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: Colors.white,
+          width: 2,
+        ),
+      ),
       child: Text(
-        dailyVerse!,
-        style: TextStyle(
+        'مناسبة اليوم : $eventName',
+        style: const TextStyle(
           fontSize: 30,
           color: Colors.white,
           fontWeight: FontWeight.bold,
@@ -683,22 +805,49 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
     );
   }
 
-  // -------------------------------------------------------------------------
-  // الحديث اليومي في الوسط
-  // -------------------------------------------------------------------------
-  Widget _buildDailyHadithSection() {
-    if (dailyHadith == null) return SizedBox.shrink();
+  Widget _buildHadithBox() {
     return Container(
-      padding: EdgeInsets.all(25),
-      child: Text(
-        dailyHadith!,
-        style: TextStyle(
-          fontSize: 25,
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-        ),
-        textAlign: TextAlign.center,
+      margin: const EdgeInsets.only(
+        top: 40.0,
+        right: 10.0,
       ),
+      padding: const EdgeInsets.all(16.0),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.2),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: Colors.white,
+          width: 2,
+        ),
+      ),
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(
+          maxWidth: 800,
+        ),
+        child: Text(
+          dailyHadith ?? 'لا يوجد حديث اليوم',
+          style: const TextStyle(
+            fontSize: 30,
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+          textAlign: TextAlign.center,
+          softWrap: true,
+          maxLines: 2,
+          overflow: TextOverflow.visible,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRightBoxesRow() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        _buildRightDateSection(),
+        const SizedBox(width: 10),
+        _buildHadithBox(),
+      ],
     );
   }
 }
