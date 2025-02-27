@@ -631,7 +631,7 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
   }
 
   // -------------------------------------------------------------------------
-  // شريط أوقات الصلاة (ثلاث صلوات فقط: فجر، ظهر، المغرب)
+  // شريط أوقات الصلا
   // -------------------------------------------------------------------------
   Widget _buildTimeRowSection() {
     return Container(
@@ -694,7 +694,7 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'الوقت المتبقي لصلاة',
+            'الوقت المتبقي لصلاة ${nextPrayerName ?? ''}',
             style: TextStyle(
               fontSize: 30,
               color: Colors.black,
@@ -729,13 +729,15 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
           '${hour12.toString().padLeft(2, '0')}:${minuteInt.toString().padLeft(2, '0')} $period';
     }
 
+    bool isNextPrayer =
+        prayerName == nextPrayerName; // تحقق إذا كانت هذه الصلاة القادمة
+
     return Container(
       padding: EdgeInsets.all(8.0),
       decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/images/time-row.png'),
-          fit: BoxFit.cover,
-        ),
+        color: isNextPrayer
+            ? Colors.white
+            : Colors.black, // الصلاة القادمة بيضاء والباقي أسود
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: Colors.white, width: 2),
       ),
@@ -746,7 +748,9 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
             prayerName,
             style: TextStyle(
               fontSize: 30,
-              color: Colors.white,
+              color: isNextPrayer
+                  ? Colors.black
+                  : Colors.white, // لون النص حسب الخلفية
               fontWeight: FontWeight.bold,
             ),
             textAlign: TextAlign.center,
@@ -756,7 +760,9 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
             displayTime,
             style: TextStyle(
               fontSize: 32,
-              color: Colors.white,
+              color: isNextPrayer
+                  ? Colors.black
+                  : Colors.white, // لون الوقت حسب الخلفية
               fontFamily: 'Almarai',
               fontWeight: FontWeight.w800,
             ),
