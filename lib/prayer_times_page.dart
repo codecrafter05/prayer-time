@@ -6,6 +6,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:prayertime/prayer_notification_page.dart';
+import 'package:marquee/marquee.dart';
 
 class PrayerTimesPage extends StatefulWidget {
   final String mosqueName;
@@ -67,9 +68,9 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
     _refreshTimer = Timer.periodic(const Duration(seconds: 5), (timer) {
       _fetchAndUpdateData();
     });
-    _loadDailyHadith();
     fetchImages();
     startImageLoop();
+    fetchHadiths();
   }
 
   Future<void> _fetchAndUpdateData() async {
@@ -85,6 +86,23 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
     countdownTimer?.cancel();
     _imageTimer?.cancel();
     super.dispose();
+  }
+
+  String formatTimeTo12Hour(String time24) {
+    time24 = time24.trim();
+    if (time24.isEmpty || !time24.contains(':')) return time24;
+
+    final parts = time24.split(':');
+    if (parts.length < 2) return time24;
+
+    int hour = int.tryParse(parts[0]) ?? 0;
+    int minute = int.tryParse(parts[1]) ?? 0;
+
+    final now = DateTime.now();
+    final dateTime = DateTime(now.year, now.month, now.day, hour, minute);
+    final formattedTime = DateFormat('hh:mm a').format(dateTime);
+
+    return formattedTime;
   }
 
   Future<void> fetchImages() async {
@@ -116,33 +134,88 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
     });
   }
 
+  Future<List<dynamic>> getPrayerTimesByMosque(String mosqueName) async {
+    final url = Uri.parse(
+        'http://127.0.0.1:8000/api/prayer-times/by-mosque?mosqueName=$mosqueName');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final body = jsonDecode(response.body);
+      if (body['status'] == true) {
+        return body['data'];
+      } else {
+        throw Exception(body['message']);
+      }
+    } else {
+      throw Exception('فشل تحميل ملف أوقات الصلاة');
+    }
+  }
+
+  Future<void> fetchHadiths() async {
+    final mosqueName = widget.mosqueName; // أو أي مصدر تاخذه منه
+
+    try {
+      final response = await http.get(
+        Uri.parse(
+            'http://127.0.0.1:8000/api/hadiths/by-mosque?mosqueName=$mosqueName'),
+        headers: {
+          'Accept': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        final hadithsList = data['data'] as List;
+
+        if (hadithsList.isNotEmpty) {
+          final randomHadith = hadithsList[0].values.first;
+
+          setState(() {
+            dailyHadith = randomHadith;
+          });
+        } else {
+          setState(() {
+            dailyHadith = 'لا يوجد حديث متاح حالياً';
+          });
+        }
+      } else {
+        setState(() {
+          dailyHadith = 'فشل في جلب الأحاديث';
+        });
+      }
+    } catch (e) {
+      print('خطأ في الاتصال: $e');
+      setState(() {
+        dailyHadith = 'حدث خطأ أثناء الاتصال';
+      });
+    }
+  }
+
   // -------------------------------------------------------------------------
   // تحميل بيانات اليوم من ملف prayer_times.json
   // -------------------------------------------------------------------------
   Future<void> loadPrayerTimes() async {
     try {
-      String jsonString =
-          await rootBundle.loadString('assets/prayer_times.json');
-      Map<String, dynamic> jsonData = json.decode(jsonString);
+      // 1) جلب كامل بيانات الصلاة الخاصة بالمسجد من API
+      final List<dynamic> sheetData =
+          await getPrayerTimesByMosque(widget.mosqueName);
 
-      // تاريخ اليوم لجهازك
-      DateTime now = DateTime.now();
-      int currentDay = now.day;
-      String currentMonthEnglish = DateFormat('MMMM').format(now);
-      String currentDayOfWeekEnglish = DateFormat('EEEE').format(now);
-      int currentYear = now.year;
+      // 2) الحصول على التاريخ الحالي من الجهاز
+      final DateTime now = DateTime.now();
+      final int currentDay = now.day;
+      final String currentMonthEnglish = DateFormat('MMMM').format(now);
+      final String currentDayOfWeekEnglish = DateFormat('EEEE').format(now);
+      final int currentYear = now.year;
 
-      // تحويل أسماء الشهر واليوم من إنجليزي إلى عربي
-      String currentMonth =
+      // 3) تحويل الأسماء الإنجليزية للعربية
+      final String currentMonth =
           englishToArabicMonths[currentMonthEnglish] ?? currentMonthEnglish;
-      String currentDayOfWeek = englishToArabicDays[currentDayOfWeekEnglish] ??
-          currentDayOfWeekEnglish;
+      final String currentDayOfWeek =
+          englishToArabicDays[currentDayOfWeekEnglish] ??
+              currentDayOfWeekEnglish;
 
-      // الوصول للبيانات من مفتاح "Sheet 2"
-      List<dynamic> sheetData = jsonData["Sheet 2"];
-
-      // إيجاد سجل اليوم
-      var today = sheetData.firstWhere(
+      // 4) البحث عن سجل اليوم
+      final today = sheetData.firstWhere(
         (item) =>
             item['gregorian_day'] == currentDay &&
             item['gregorian_month'] == currentMonth &&
@@ -154,68 +227,69 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
       if (today != null) {
         setState(() {
           todayData = today;
-
-          // تجميع التاريخين لعرضهما في وسط الصفحة
-          String hijriDay = today['hijri_day'].toString();
-          String hijriMonth = today['hijri_month_name'];
-          String hijriYear = today['hijri_year'].toString();
-
-          String gregorianDay = today['gregorian_day'].toString();
-          String gregorianMonth = today['gregorian_month'];
-          String gregorianYear = today['gregorian_year'].toString();
-
-          combinedDate = '$gregorianDay $gregorianMonth $gregorianYear\n'
-              '$hijriDay $hijriMonth $hijriYear';
         });
       } else {
-        print("لم يتم العثور على تاريخ اليوم في JSON. تأكد من تطابق التاريخ.");
+        print("لم يتم العثور على تاريخ اليوم في بيانات الـAPI.");
       }
     } catch (e) {
-      print('Error loading prayer_times.json: $e');
+      print('Error loading prayer times from API: $e');
     }
   }
 
   // -------------------------------------------------------------------------
   // حساب الوقت المتبقي للصلاة التالية
-  // (فجر + ظهر + عشاء فقط)
   // -------------------------------------------------------------------------
   void calculateTimeUntilNextPrayer() {
     if (todayData == null) {
-      nextPrayerName = null;
-      timeUntilNextPrayer = null;
+      setState(() {
+        nextPrayerName = null;
+        timeUntilNextPrayer = null;
+      });
       return;
     }
 
-    // نضيف فقط الفجر، الظهر، العشاء (maghrib) من ملف JSON
-    List<String> prayerTimes = [
-      '${todayData!['fajr_hour']}:${todayData!['fajr_minute']}', // فجر
-      '${todayData!['dhuhr_hour']}:${todayData!['dhuhr_minute']}', // ظهر
-      '${todayData!['maghrib_hour']}:${todayData!['maghrib_minute']}' // عشاء
-    ];
-
-    List<String> prayerNames = [
-      'الفجر',
-      'الظهر',
-      'المغرب',
+    // استخدام المسميات الجديدة للأوقات من JSON مع التحقق من وجودها
+    List<Map<String, String>> prayers = [
+      if (todayData?['fajr'] != null)
+        {'name': 'الفجر', 'time': todayData!['fajr']},
+      if (todayData?['sunrise'] != null)
+        {'name': 'الشروق', 'time': todayData!['sunrise']},
+      if (todayData?['dhuhr'] != null)
+        {'name': 'الظهر', 'time': todayData!['dhuhr']},
+      if (todayData?['asr'] != null)
+        {'name': 'العصر', 'time': todayData!['asr']},
+      if (todayData?['maghrib'] != null)
+        {'name': 'المغرب', 'time': todayData!['maghrib']},
+      if (todayData?['isha'] != null)
+        {'name': 'العشاء', 'time': todayData!['isha']},
     ];
 
     DateTime now = DateTime.now();
     bool foundNextPrayer = false;
     DateTime? previousPrayerTime;
 
-    for (int i = 0; i < prayerTimes.length; i++) {
-      List<String> timeParts = prayerTimes[i].split(':');
+    for (var prayer in prayers) {
+      String? prayerTime = prayer['time'];
+      if (prayerTime == null || !prayerTime.contains(':'))
+        continue; // تجنب القيم غير الصالحة
+
+      List<String> timeParts = prayerTime.split(':');
+      int? hour = int.tryParse(timeParts[0]);
+      int? minute = int.tryParse(timeParts[1]);
+
+      if (hour == null || minute == null) continue; // تخطي القيم غير الصالحة
+
       DateTime currentPrayerTime = DateTime(
         now.year,
         now.month,
         now.day,
-        int.parse(timeParts[0]),
-        int.parse(timeParts[1]),
+        hour,
+        minute,
       );
 
       if (currentPrayerTime.isAfter(now)) {
         setState(() {
-          nextPrayerName = prayerNames[i];
+          nextPrayerName = prayer['name'];
           timeUntilNextPrayer = currentPrayerTime.difference(now);
 
           previousPrayerTime ??= currentPrayerTime;
@@ -230,35 +304,53 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
       }
     }
 
-    // إذا لم نجد صلاة تالـيـة اليوم -> الصلاة التالية هي الفجر في اليوم التالي
-    if (!foundNextPrayer) {
-      List<String> fajrTimeParts = prayerTimes[0].split(':');
-      DateTime nextFajrTime = DateTime(
-        now.year,
-        now.month,
-        now.day + 1,
-        int.parse(fajrTimeParts[0]),
-        int.parse(fajrTimeParts[1]),
+    // إذا لم نجد صلاة تالـيـة اليوم -> الصلاة التالية هي الفجر في اليوم التالي (إذا كان موجودًا)
+    if (!foundNextPrayer && prayers.isNotEmpty) {
+      var fajrPrayer = prayers.firstWhere(
+        (prayer) => prayer['name'] == 'الفجر',
+        orElse: () => {},
       );
 
-      setState(() {
-        nextPrayerName = prayerNames[0]; // الفجر
-        timeUntilNextPrayer = nextFajrTime.difference(now);
+      if (fajrPrayer.isNotEmpty && fajrPrayer['time'] != null) {
+        List<String> fajrTimeParts = fajrPrayer['time']!.split(':');
+        int? fajrHour = int.tryParse(fajrTimeParts[0]);
+        int? fajrMinute = int.tryParse(fajrTimeParts[1]);
 
-        // آخر صلاة في اليوم الحالي نفترضها العشاء (prayerTimes[2])
-        List<String> lastPrayerParts = prayerTimes[2].split(':');
-        DateTime lastPrayerTime = DateTime(
-          now.year,
-          now.month,
-          now.day,
-          int.parse(lastPrayerParts[0]),
-          int.parse(lastPrayerParts[1]),
-        );
+        if (fajrHour != null && fajrMinute != null) {
+          DateTime nextFajrTime = DateTime(
+            now.year,
+            now.month,
+            now.day + 1,
+            fajrHour,
+            fajrMinute,
+          );
 
-        totalPrayerWindow = nextFajrTime.difference(
-          lastPrayerTime,
-        );
-      });
+          setState(() {
+            nextPrayerName = fajrPrayer['name']; // الفجر
+            timeUntilNextPrayer = nextFajrTime.difference(now);
+
+            // آخر صلاة في اليوم الحالي نفترضها العشاء إن وجدت
+            var lastPrayer = prayers.last;
+            if (lastPrayer['time'] != null) {
+              List<String> lastPrayerParts = lastPrayer['time']!.split(':');
+              int? lastPrayerHour = int.tryParse(lastPrayerParts[0]);
+              int? lastPrayerMinute = int.tryParse(lastPrayerParts[1]);
+
+              if (lastPrayerHour != null && lastPrayerMinute != null) {
+                DateTime lastPrayerTime = DateTime(
+                  now.year,
+                  now.month,
+                  now.day,
+                  lastPrayerHour,
+                  lastPrayerMinute,
+                );
+
+                totalPrayerWindow = nextFajrTime.difference(lastPrayerTime);
+              }
+            }
+          });
+        }
+      }
     }
   }
 
@@ -347,30 +439,6 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
   }
 
   // -------------------------------------------------------------------------
-  // تحميل الاحاديث اليومية
-  // -------------------------------------------------------------------------
-  Future<void> _loadDailyHadith() async {
-    try {
-      // تحميل الملف
-      String jsonString = await rootBundle.loadString('assets/hadith.json');
-
-      // تحويل النص إلى JSON
-      Map<String, dynamic> jsonData = json.decode(jsonString);
-
-      // استخراج قائمة الأحاديث
-      List<dynamic> hadithList = jsonData["Sheet 4"];
-
-      // اختيار حديث عشوائي بناءً على اليوم
-      setState(() {
-        dailyHadith =
-            hadithList[DateTime.now().day % hadithList.length].values.first;
-      });
-    } catch (e) {
-      print("Error loading hadith.json: $e");
-    }
-  }
-
-  // -------------------------------------------------------------------------
   // واجهة المستخدم
   // -------------------------------------------------------------------------
   @override
@@ -388,55 +456,41 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Text(
-                  'مسجد: ${widget.mosqueName}',
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-              Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                      child: Stack(
-                        alignment: Alignment.center,
-                        clipBehavior: Clip.none,
-                        children: [
-                          _buildClockSection(),
-                          _buildImageBox(),
-                          _buildDailyVerseBox(),
-                        ],
-                      ),
+                      flex: 2,
+                      child: _buildImageBox(),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      flex: 1,
+                      child: _buildClockSection(),
                     ),
                   ],
                 ),
               ),
               _buildTimeRowSection(),
-              _buildRightBoxesRow(),
+              Expanded(child: Container()),
             ],
           ),
         ),
       ),
+      bottomNavigationBar: _buildHadithTicker(),
     );
   }
 
   // -------------------------------------------------------------------------
-  //  المربع اليمين
+  // المربع اليمين مع عرض اسم المسجد فوق اسم اليوم وإضافة كافة العناصر بتنسيق متساوٍ
   // -------------------------------------------------------------------------
   Widget _buildClockSection() {
-    // حساب الوقت بصيغة 12 ساعة
     final hour = _currentTime.hour % 12 == 0 ? 12 : _currentTime.hour % 12;
     final minute = _currentTime.minute.toString().padLeft(2, '0');
     final second = _currentTime.second.toString().padLeft(2, '0');
     final period = _currentTime.hour >= 12 ? "PM" : "AM";
 
-    // استخراج بيانات اليوم من todayData
     String dayName = todayData?['day_of_week'] ?? '';
     String gregorianDate = (todayData == null)
         ? ''
@@ -444,68 +498,110 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
     String hijriDate = (todayData == null)
         ? ''
         : '${todayData!['hijri_day']} ${todayData!['hijri_month_name']} ${todayData!['hijri_year']}';
+    String event = todayData?['event'] ?? '';
 
     return Align(
       alignment: Alignment.topRight,
       child: Container(
-        // تصغير حجم المربع
-        width: MediaQuery.of(context).size.width * 0.2,
-        height: 400,
+        width: MediaQuery.of(context).size.width * 0.3,
+        height: 550,
         padding: const EdgeInsets.all(16.0),
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.2), // خلفية نصف شفافة
-          borderRadius: BorderRadius.circular(16), // حواف مقوسة
+          color: Colors.white.withOpacity(0.2),
+          borderRadius: BorderRadius.circular(16),
           border: Border.all(color: Colors.white, width: 2),
         ),
         child: Column(
-          // لجعل جميع العناصر في المنتصف
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            // 0) اسم المسجد
+            Text(
+              widget.mosqueName,
+              style: const TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+              textAlign: TextAlign.center,
+            ),
+
+            _buildDivider(), // ← خط فاصل
+
             // 1) اسم اليوم
-            if (dayName.isNotEmpty)
+            if (dayName.isNotEmpty) ...[
               Text(
                 dayName,
                 style: const TextStyle(
-                  fontSize: 50,
+                  fontSize: 70,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
                 textAlign: TextAlign.center,
               ),
-            const SizedBox(height: 15),
+            ],
 
             // 2) الساعة الزمنية
             _buildClockWithPeriod(hour, minute, second, period),
-            const SizedBox(height: 15),
+
+            _buildDivider(), // ← خط فاصل
 
             // 3) التاريخ الميلادي
-            if (gregorianDate.isNotEmpty)
+            if (gregorianDate.isNotEmpty) ...[
               Text(
                 gregorianDate,
                 style: const TextStyle(
-                  fontSize: 28,
+                  fontSize: 35,
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.center,
+                textDirection: ui.TextDirection.rtl,
               ),
-            const SizedBox(height: 10),
+            ],
 
             // 4) التاريخ الهجري
-            if (hijriDate.isNotEmpty)
+            if (hijriDate.isNotEmpty) ...[
               Text(
                 hijriDate,
                 style: const TextStyle(
-                  fontSize: 28,
+                  fontSize: 35,
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.center,
+                textDirection: ui.TextDirection.rtl,
               ),
+
+              _buildDivider(), // ← خط فاصل
+            ],
+
+            // 5) مناسبات اليوم
+            if (event.isNotEmpty) ...[
+              Text(
+                'مناسبة اليوم: $event',
+                style: const TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildDivider() {
+    return Divider(
+      color: Colors.white.withOpacity(0.3), // درجة شفافية
+      thickness: 2, // سماكة الخط
+      indent: 50, // مسافة من الطرف الأيسر
+      endIndent: 50, // مسافة من الطرف الأيمن
     );
   }
 
@@ -525,11 +621,11 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
         children: [
           TextSpan(
             text: "$hour:$minute:$second ",
-            style: const TextStyle(fontSize: 45),
+            style: const TextStyle(fontSize: 60),
           ),
           TextSpan(
             text: period,
-            style: const TextStyle(fontSize: 25),
+            style: const TextStyle(fontSize: 40),
           ),
         ],
       ),
@@ -537,25 +633,18 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
   }
 
   // -------------------------------------------------------------------------
-  // المربع وسط الصوره
+  // المربع الصوره
   // -------------------------------------------------------------------------
   Widget _buildImageBox() {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.4,
-      height: 400,
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.2),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.white, width: 2),
-      ),
+      height: 550,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
         child: imageUrls.isNotEmpty
             ? Image.network(
                 imageUrls[currentIndex],
-                key: ValueKey(imageUrls[
-                    currentIndex]), // يجبر Flutter على تحديث الصورة عند التغيير
-                fit: BoxFit.cover,
+                key: ValueKey(imageUrls[currentIndex]),
+                fit: BoxFit.contain,
                 headers: {
                   "Access-Control-Allow-Origin": "*"
                 }, // ✅ السماح بتحميل الصور
@@ -564,8 +653,7 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
                   return const Center(child: CircularProgressIndicator());
                 },
                 errorBuilder: (context, error, stackTrace) {
-                  print(
-                      "⚠️ فشل تحميل الصورة: ${imageUrls[currentIndex]}"); // ✅ طباعة الخطأ في Debug Console
+                  print("⚠️ فشل تحميل الصورة: ${imageUrls[currentIndex]}");
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -583,94 +671,58 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
   }
 
   // -------------------------------------------------------------------------
-  // المربع  يسار
+  // شريط أوقات الصلا
   // -------------------------------------------------------------------------
-  Widget _buildDailyVerseBox() {
-    return Align(
-      alignment: Alignment.topLeft,
-      child: Container(
-        width: MediaQuery.of(context).size.width * 0.2,
-        height: 400,
-        padding: const EdgeInsets.all(16.0),
-        decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.2),
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: Colors.white, width: 2),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            if (dailyVerse == null)
-              const Text(
-                'جاري تحميل الآية...',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.center,
-              )
-            else
-              Text(
-                dailyVerse!,
-                style: const TextStyle(
-                  fontSize: 25,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.center,
-                softWrap: true,
-                maxLines: 5,
-                overflow: TextOverflow.ellipsis,
-              ),
-          ],
-        ),
-      ),
-    );
-  }
 
-  // -------------------------------------------------------------------------
-  // شريط أوقات الصلاة (ثلاث صلوات فقط: فجر، ظهر، المغرب)
-  // -------------------------------------------------------------------------
   Widget _buildTimeRowSection() {
     return Container(
-      height: 130,
+      padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          _buildCountdownBoxItem(), // عنصر العد التنازلي
-          _buildPrayerBoxItem(
-            'العشاء',
-            "20",
-            "00",
+          // عنصر العد التنازلي بعرض ثابت
+          SizedBox(
+            width: 300, // العرض الثابت المطلوب للعد التنازلي
+            height: 150,
+            child: _buildCountdownBoxItem(),
           ),
-
-          _buildPrayerBoxItem(
-            'المغرب',
-            todayData?['maghrib_hour'],
-            todayData?['maghrib_minute'],
-          ),
-          _buildPrayerBoxItem(
-            'العصر',
-            "20",
-            "00",
-          ),
-          _buildPrayerBoxItem(
-            'الظهر',
-            todayData?['dhuhr_hour'],
-            todayData?['dhuhr_minute'],
-          ),
-          _buildPrayerBoxItem(
-            'الشروق',
-            todayData?['sunrise_hour'],
-            todayData?['sunrise_minute'],
-          ),
-          _buildPrayerBoxItem(
-            'الفجر',
-            todayData?['fajr_hour'],
-            todayData?['fajr_minute'],
-          ),
+          // باقي عناصر الصلاة تُغلف بـ Expanded لتتوزع بالتساوي
+          if ((todayData?['isha'] ?? '').toString().isNotEmpty) ...[
+            const SizedBox(width: 4),
+            Expanded(
+                child: _buildPrayerBoxItem(
+                    'العشاء', todayData?['isha']?.toString())),
+          ],
+          if ((todayData?['maghrib'] ?? '').toString().isNotEmpty) ...[
+            const SizedBox(width: 4),
+            Expanded(
+                child: _buildPrayerBoxItem(
+                    'المغرب', todayData?['maghrib']?.toString())),
+          ],
+          if ((todayData?['asr'] ?? '').toString().isNotEmpty) ...[
+            const SizedBox(width: 4),
+            Expanded(
+                child: _buildPrayerBoxItem(
+                    'العصر', todayData?['asr']?.toString())),
+          ],
+          if ((todayData?['dhuhr'] ?? '').toString().isNotEmpty) ...[
+            const SizedBox(width: 4),
+            Expanded(
+                child: _buildPrayerBoxItem(
+                    'الظهر', todayData?['dhuhr']?.toString())),
+          ],
+          if ((todayData?['sunrise'] ?? '').toString().isNotEmpty) ...[
+            const SizedBox(width: 4),
+            Expanded(
+                child: _buildPrayerBoxItem(
+                    'الشروق', todayData?['sunrise']?.toString())),
+          ],
+          if ((todayData?['fajr'] ?? '').toString().isNotEmpty) ...[
+            const SizedBox(width: 4),
+            Expanded(
+                child: _buildPrayerBoxItem(
+                    'الفجر', todayData?['fajr']?.toString())),
+          ],
         ],
       ),
     );
@@ -680,8 +732,9 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
     String countdownText = timeUntilNextPrayer != null
         ? _formatDuration(timeUntilNextPrayer!)
         : "00:00:00";
+
     return Container(
-      padding: EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
@@ -694,18 +747,18 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'الوقت المتبقي لصلاة',
-            style: TextStyle(
+            ' المتبقي لصلاة ${nextPrayerName ?? ''}',
+            style: const TextStyle(
               fontSize: 30,
               color: Colors.black,
               fontWeight: FontWeight.bold,
             ),
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
             countdownText,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 32,
               color: Colors.black,
               fontFamily: 'Digital',
@@ -718,24 +771,17 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
     );
   }
 
-  Widget _buildPrayerBoxItem(String prayerName, dynamic hour, dynamic minute) {
-    String displayTime = '';
-    if (hour != null && minute != null) {
-      int hourInt = int.parse(hour.toString());
-      int minuteInt = int.parse(minute.toString());
-      int hour12 = hourInt > 12 ? hourInt - 12 : (hourInt == 0 ? 12 : hourInt);
-      String period = hourInt >= 12 ? 'PM' : 'AM';
-      displayTime =
-          '${hour12.toString().padLeft(2, '0')}:${minuteInt.toString().padLeft(2, '0')} $period';
-    }
+  Widget _buildPrayerBoxItem(String prayerName, String? prayerTime) {
+    if (prayerTime == null || prayerTime.isEmpty) return const SizedBox();
+    bool isNextPrayer = (prayerName == nextPrayerName);
+
+    String finalTime = formatTimeTo12Hour(prayerTime);
 
     return Container(
-      padding: EdgeInsets.all(8.0),
+      height: 150,
+      padding: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/images/time-row.png'),
-          fit: BoxFit.cover,
-        ),
+        color: isNextPrayer ? Colors.white : Colors.black,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: Colors.white, width: 2),
       ),
@@ -745,18 +791,18 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
           Text(
             prayerName,
             style: TextStyle(
-              fontSize: 30,
-              color: Colors.white,
+              fontSize: 40,
+              color: isNextPrayer ? Colors.black : Colors.white,
               fontWeight: FontWeight.bold,
             ),
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
-            displayTime,
+            finalTime, // استخدم الوقت المخصص
             style: TextStyle(
-              fontSize: 32,
-              color: Colors.white,
+              fontSize: 35,
+              color: isNextPrayer ? Colors.black : Colors.white,
               fontFamily: 'Almarai',
               fontWeight: FontWeight.w800,
             ),
@@ -775,79 +821,30 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
   }
 
   // -------------------------------------------------------------------------
-  // شريط السفلي الحذيث + المناسبات
+  // شريط الحديث المتحرك (مثل شريط الأخبار)
   // -------------------------------------------------------------------------
-  Widget _buildRightDateSection() {
-    String eventName = todayData?['event'] ?? 'لا يوجد';
-
+  Widget _buildHadithTicker() {
     return Container(
-      margin: const EdgeInsets.only(
-        top: 40.0,
-      ),
-      padding: const EdgeInsets.all(16.0),
+      height: 40,
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
       decoration: BoxDecoration(
         color: Colors.white.withOpacity(0.2),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: Colors.white,
-          width: 2,
-        ),
+        border: Border.all(color: Colors.white, width: 2),
       ),
-      child: Text(
-        'مناسبة اليوم : $eventName',
+      child: Marquee(
+        text: dailyHadith ?? 'جاري تحميل الحديث...',
         style: const TextStyle(
-          fontSize: 30,
-          color: Colors.white,
+          fontSize: 24,
+          color: ui.Color.fromARGB(255, 0, 0, 0),
           fontWeight: FontWeight.bold,
         ),
-        textAlign: TextAlign.center,
+        scrollAxis: Axis.horizontal,
+        textDirection: ui.TextDirection.rtl,
+        blankSpace: 50,
+        velocity: 50.0,
+        pauseAfterRound: const Duration(seconds: 1),
+        startPadding: 10.0,
       ),
-    );
-  }
-
-  Widget _buildHadithBox() {
-    return Container(
-      margin: const EdgeInsets.only(
-        top: 40.0,
-        right: 10.0,
-      ),
-      padding: const EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.2),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: Colors.white,
-          width: 2,
-        ),
-      ),
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(
-          maxWidth: 800,
-        ),
-        child: Text(
-          dailyHadith ?? 'لا يوجد حديث اليوم',
-          style: const TextStyle(
-            fontSize: 30,
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
-          textAlign: TextAlign.center,
-          softWrap: true,
-          maxLines: 2,
-          overflow: TextOverflow.visible,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildRightBoxesRow() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        _buildRightDateSection(),
-        const SizedBox(width: 10),
-        _buildHadithBox(),
-      ],
     );
   }
 }
