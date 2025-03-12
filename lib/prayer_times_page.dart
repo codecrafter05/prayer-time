@@ -68,9 +68,9 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
     _refreshTimer = Timer.periodic(const Duration(seconds: 5), (timer) {
       _fetchAndUpdateData();
     });
-    _loadDailyHadith();
     fetchImages();
     startImageLoop();
+    fetchHadiths();
   }
 
   Future<void> _fetchAndUpdateData() async {
@@ -86,6 +86,23 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
     countdownTimer?.cancel();
     _imageTimer?.cancel();
     super.dispose();
+  }
+
+  String formatTimeTo12Hour(String time24) {
+    time24 = time24.trim();
+    if (time24.isEmpty || !time24.contains(':')) return time24;
+
+    final parts = time24.split(':');
+    if (parts.length < 2) return time24;
+
+    int hour = int.tryParse(parts[0]) ?? 0;
+    int minute = int.tryParse(parts[1]) ?? 0;
+
+    final now = DateTime.now();
+    final dateTime = DateTime(now.year, now.month, now.day, hour, minute);
+    final formattedTime = DateFormat('hh:mm a').format(dateTime);
+
+    return formattedTime;
   }
 
   Future<void> fetchImages() async {
@@ -131,6 +148,46 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
       }
     } else {
       throw Exception('فشل تحميل ملف أوقات الصلاة');
+    }
+  }
+
+  Future<void> fetchHadiths() async {
+    final mosqueName = widget.mosqueName; // أو أي مصدر تاخذه منه
+
+    try {
+      final response = await http.get(
+        Uri.parse(
+            'http://127.0.0.1:8000/api/hadiths/by-mosque?mosqueName=$mosqueName'),
+        headers: {
+          'Accept': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        final hadithsList = data['data'] as List;
+
+        if (hadithsList.isNotEmpty) {
+          final randomHadith = hadithsList[0].values.first;
+
+          setState(() {
+            dailyHadith = randomHadith;
+          });
+        } else {
+          setState(() {
+            dailyHadith = 'لا يوجد حديث متاح حالياً';
+          });
+        }
+      } else {
+        setState(() {
+          dailyHadith = 'فشل في جلب الأحاديث';
+        });
+      }
+    } catch (e) {
+      print('خطأ في الاتصال: $e');
+      setState(() {
+        dailyHadith = 'حدث خطأ أثناء الاتصال';
+      });
     }
   }
 
@@ -382,28 +439,6 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
   }
 
   // -------------------------------------------------------------------------
-  // تحميل الاحاديث اليومية
-  // -------------------------------------------------------------------------
-  Future<void> _loadDailyHadith() async {
-    try {
-      String jsonString = await rootBundle.loadString('assets/hadith.json');
-      Map<String, dynamic> jsonData = json.decode(jsonString);
-      List<dynamic> hadithList = jsonData["Sheet 4"];
-
-      // جمع جميع الأحاديث في قائمة نصية
-      List<String> hadiths =
-          hadithList.map((hadith) => hadith.values.first.toString()).toList();
-
-      // دمج الأحاديث مع فاصل بين كل حديث والآخر
-      setState(() {
-        dailyHadith = hadiths.join("       |       ");
-      });
-    } catch (e) {
-      print("Error loading hadith.json: $e");
-    }
-  }
-
-  // -------------------------------------------------------------------------
   // واجهة المستخدم
   // -------------------------------------------------------------------------
   @override
@@ -469,7 +504,7 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
       alignment: Alignment.topRight,
       child: Container(
         width: MediaQuery.of(context).size.width * 0.3,
-        height: 500,
+        height: 550,
         padding: const EdgeInsets.all(16.0),
         decoration: BoxDecoration(
           color: Colors.white.withOpacity(0.2),
@@ -477,22 +512,24 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
           border: Border.all(color: Colors.white, width: 2),
         ),
         child: Column(
-          mainAxisAlignment:
-              MainAxisAlignment.spaceEvenly, // توزيع متساوٍ للعناصر
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // 0) اسم المسجد
             Text(
               widget.mosqueName,
               style: const TextStyle(
-                fontSize: 20,
+                fontSize: 30,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
               textAlign: TextAlign.center,
             ),
+
+            _buildDivider(), // ← خط فاصل
+
             // 1) اسم اليوم
-            if (dayName.isNotEmpty)
+            if (dayName.isNotEmpty) ...[
               Text(
                 dayName,
                 style: const TextStyle(
@@ -502,10 +539,15 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
                 ),
                 textAlign: TextAlign.center,
               ),
+            ],
+
             // 2) الساعة الزمنية
             _buildClockWithPeriod(hour, minute, second, period),
+
+            _buildDivider(), // ← خط فاصل
+
             // 3) التاريخ الميلادي
-            if (gregorianDate.isNotEmpty)
+            if (gregorianDate.isNotEmpty) ...[
               Text(
                 gregorianDate,
                 style: const TextStyle(
@@ -516,8 +558,10 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
                 textAlign: TextAlign.center,
                 textDirection: ui.TextDirection.rtl,
               ),
+            ],
+
             // 4) التاريخ الهجري
-            if (hijriDate.isNotEmpty)
+            if (hijriDate.isNotEmpty) ...[
               Text(
                 hijriDate,
                 style: const TextStyle(
@@ -528,8 +572,12 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
                 textAlign: TextAlign.center,
                 textDirection: ui.TextDirection.rtl,
               ),
-            // 5) مناسبات اليوم (تقلص الخط إذا كان السطر طويل)
-            if (event.isNotEmpty)
+
+              _buildDivider(), // ← خط فاصل
+            ],
+
+            // 5) مناسبات اليوم
+            if (event.isNotEmpty) ...[
               Text(
                 'مناسبة اليوم: $event',
                 style: const TextStyle(
@@ -541,9 +589,19 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
+            ],
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildDivider() {
+    return Divider(
+      color: Colors.white.withOpacity(0.3), // درجة شفافية
+      thickness: 2, // سماكة الخط
+      indent: 50, // مسافة من الطرف الأيسر
+      endIndent: 50, // مسافة من الطرف الأيمن
     );
   }
 
@@ -575,16 +633,11 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
   }
 
   // -------------------------------------------------------------------------
-  // المربع وسط الصوره
+  // المربع الصوره
   // -------------------------------------------------------------------------
   Widget _buildImageBox() {
     return Container(
-      height: 500,
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.white, width: 2),
-      ),
+      height: 550,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
         child: imageUrls.isNotEmpty
@@ -618,54 +671,6 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
   }
 
   // -------------------------------------------------------------------------
-  // المربع  يسار
-  // -------------------------------------------------------------------------
-  // Widget _buildDailyVerseBox() {
-  //   return Align(
-  //     alignment: Alignment.topLeft,
-  //     child: Container(
-  //       width: MediaQuery.of(context).size.width * 0.2,
-  //       height: 400,
-  //       padding: const EdgeInsets.all(16.0),
-  //       decoration: BoxDecoration(
-  //         color: Colors.white.withOpacity(0.2),
-  //         borderRadius: BorderRadius.circular(16),
-  //         border: Border.all(color: Colors.white, width: 2),
-  //       ),
-  //       child: Column(
-  //         mainAxisAlignment: MainAxisAlignment.center,
-  //         crossAxisAlignment: CrossAxisAlignment.center,
-  //         children: [
-  //           if (dailyVerse == null)
-  //             const Text(
-  //               'جاري تحميل الآية...',
-  //               style: TextStyle(
-  //                 fontSize: 20,
-  //                 color: Colors.white,
-  //                 fontWeight: FontWeight.bold,
-  //               ),
-  //               textAlign: TextAlign.center,
-  //             )
-  //           else
-  //             Text(
-  //               dailyVerse!,
-  //               style: const TextStyle(
-  //                 fontSize: 25,
-  //                 color: Colors.white,
-  //                 fontWeight: FontWeight.bold,
-  //               ),
-  //               textAlign: TextAlign.center,
-  //               softWrap: true,
-  //               maxLines: 5,
-  //               overflow: TextOverflow.ellipsis,
-  //             ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
-
-  // -------------------------------------------------------------------------
   // شريط أوقات الصلا
   // -------------------------------------------------------------------------
 
@@ -678,6 +683,7 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
           // عنصر العد التنازلي بعرض ثابت
           SizedBox(
             width: 300, // العرض الثابت المطلوب للعد التنازلي
+            height: 150,
             child: _buildCountdownBoxItem(),
           ),
           // باقي عناصر الصلاة تُغلف بـ Expanded لتتوزع بالتساوي
@@ -728,8 +734,6 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
         : "00:00:00";
 
     return Container(
-      // هنا لم نعد نحدد العرض الثابت لأننا نستخدم SizedBox في الصف الخارجي
-      height: 120,
       padding: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -770,8 +774,11 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
   Widget _buildPrayerBoxItem(String prayerName, String? prayerTime) {
     if (prayerTime == null || prayerTime.isEmpty) return const SizedBox();
     bool isNextPrayer = (prayerName == nextPrayerName);
+
+    String finalTime = formatTimeTo12Hour(prayerTime);
+
     return Container(
-      height: 120,
+      height: 150,
       padding: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
         color: isNextPrayer ? Colors.white : Colors.black,
@@ -784,7 +791,7 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
           Text(
             prayerName,
             style: TextStyle(
-              fontSize: 30,
+              fontSize: 40,
               color: isNextPrayer ? Colors.black : Colors.white,
               fontWeight: FontWeight.bold,
             ),
@@ -792,9 +799,9 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
           ),
           const SizedBox(height: 8),
           Text(
-            prayerTime,
+            finalTime, // استخدم الوقت المخصص
             style: TextStyle(
-              fontSize: 30,
+              fontSize: 35,
               color: isNextPrayer ? Colors.black : Colors.white,
               fontFamily: 'Almarai',
               fontWeight: FontWeight.w800,
@@ -816,21 +823,18 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
   // -------------------------------------------------------------------------
   // شريط الحديث المتحرك (مثل شريط الأخبار)
   // -------------------------------------------------------------------------
-// -------------------------------------------------------------------------
-// شريط الحديث المتحرك (مثل شريط الأخبار)
-// -------------------------------------------------------------------------
   Widget _buildHadithTicker() {
     return Container(
-      height: 30, // تقليل الارتفاع ليشبه شريط الأخبار
+      height: 40,
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       decoration: BoxDecoration(
         color: Colors.white.withOpacity(0.2),
         border: Border.all(color: Colors.white, width: 2),
       ),
       child: Marquee(
-        text: dailyHadith ?? 'لا يوجد حديث اليوم',
+        text: dailyHadith ?? 'جاري تحميل الحديث...',
         style: const TextStyle(
-          fontSize: 18,
+          fontSize: 24,
           color: ui.Color.fromARGB(255, 0, 0, 0),
           fontWeight: FontWeight.bold,
         ),
