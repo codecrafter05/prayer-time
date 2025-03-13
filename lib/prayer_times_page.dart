@@ -27,7 +27,7 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
   String? dailyVerse;
   Timer? _refreshTimer;
   String? dailyHadith;
-
+  bool notificationShown = false;
   List<String> imageUrls = [];
   int currentIndex = 0;
   Timer? _imageTimer;
@@ -127,7 +127,7 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
   }
 
   void startImageLoop() {
-    Timer.periodic(Duration(seconds: 5), (timer) {
+    Timer.periodic(Duration(seconds: 20), (timer) {
       setState(() {
         currentIndex = (currentIndex + 1) % imageUrls.length;
       });
@@ -248,7 +248,6 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
       return;
     }
 
-    // استخدام المسميات الجديدة للأوقات من JSON مع التحقق من وجودها
     List<Map<String, String>> prayers = [
       if (todayData?['fajr'] != null)
         {'name': 'الفجر', 'time': todayData!['fajr']},
@@ -270,14 +269,13 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
 
     for (var prayer in prayers) {
       String? prayerTime = prayer['time'];
-      if (prayerTime == null || !prayerTime.contains(':'))
-        continue; // تجنب القيم غير الصالحة
+      if (prayerTime == null || !prayerTime.contains(':')) continue;
 
       List<String> timeParts = prayerTime.split(':');
       int? hour = int.tryParse(timeParts[0]);
       int? minute = int.tryParse(timeParts[1]);
 
-      if (hour == null || minute == null) continue; // تخطي القيم غير الصالحة
+      if (hour == null || minute == null) continue;
 
       DateTime currentPrayerTime = DateTime(
         now.year,
@@ -304,7 +302,6 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
       }
     }
 
-    // إذا لم نجد صلاة تالـيـة اليوم -> الصلاة التالية هي الفجر في اليوم التالي (إذا كان موجودًا)
     if (!foundNextPrayer && prayers.isNotEmpty) {
       var fajrPrayer = prayers.firstWhere(
         (prayer) => prayer['name'] == 'الفجر',
@@ -326,10 +323,9 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
           );
 
           setState(() {
-            nextPrayerName = fajrPrayer['name']; // الفجر
+            nextPrayerName = fajrPrayer['name'];
             timeUntilNextPrayer = nextFajrTime.difference(now);
 
-            // آخر صلاة في اليوم الحالي نفترضها العشاء إن وجدت
             var lastPrayer = prayers.last;
             if (lastPrayer['time'] != null) {
               List<String> lastPrayerParts = lastPrayer['time']!.split(':');
@@ -355,31 +351,31 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
   }
 
   // -------------------------------------------------------------------------
-  // بدء مؤقت يحدث كل ثانية لتحديث:
-  // 1) الوقت الحالي (للساعة الرقمية)
-  // 2) الوقت المتبقي للصلاة (العد التنازلي)
-  // عند بلوغ 0 -> إظهار إشعار 3 دقائق
+  // بدء مؤقت يحدث كل ثانية لتحديث الوقت المتبقي
   // -------------------------------------------------------------------------
   void startCountdown() {
+    countdownTimer?.cancel(); // ✅ تأكد ما فيه أكثر من تايمر يشتغل
+    bool notificationShown = false; // ✅ لتفادي تكرار الفتح لنفس الصلاة
+
     countdownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      // تحديث الساعة الرقمية
       setState(() {
-        _currentTime = DateTime.now();
+        _currentTime = DateTime.now(); // الساعة الرقمية
       });
 
-      // إن لم تُحسب بيانات اليوم أو الوقت المتبقي
       if (timeUntilNextPrayer == null) return;
 
       if (timeUntilNextPrayer!.inSeconds > 0) {
-        // أنقص ثانية واحدة من العدّ التنازلي
+        // العد التنازلي شغال
         setState(() {
-          timeUntilNextPrayer = timeUntilNextPrayer! - Duration(seconds: 1);
+          timeUntilNextPrayer =
+              timeUntilNextPrayer! - const Duration(seconds: 1);
         });
-      } else if (timeUntilNextPrayer!.inSeconds == 0) {
-        // حان وقت الصلاة بالضبط
-        timer.cancel();
+      } else if (timeUntilNextPrayer!.inSeconds <= 0 && !notificationShown) {
+        // ✅ وقت الصلاة حان
+        notificationShown = true;
+        timer.cancel(); // نوقف العد التنازلي مؤقتًا
 
-        // إظهار صفحة الإشعار
+        // ✅ إظهار صفحة الإشعار
         WidgetsBinding.instance.addPostFrameCallback((_) {
           Navigator.push(
             context,
@@ -390,26 +386,17 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
             ),
           );
 
-          // صفحة الإشعار تبقى 3 دقائق
+          // ✅ بعد 3 دقائق يرجع تلقائيًا
           Future.delayed(const Duration(minutes: 3), () {
-            if (mounted) {
-              Navigator.pop(context);
+            if (mounted && Navigator.of(context).canPop()) {
+              Navigator.of(context).pop(); // إغلاق صفحة الإشعار
             }
 
-            // العودة للصفحة الرئيسية
-            // نحسب الصلاة التالية ونستمر
+            // ✅ بعد الرجوع، نحسب الصلاة التالية ونبدأ العد التنازلي من جديد
             calculateTimeUntilNextPrayer();
             startCountdown();
           });
         });
-      } else {
-        // القيمة سالبة => فات وقت هذه الصلاة
-        // تجاوزها واذهب للصلاة التالية
-        timer.cancel();
-        setState(() {
-          calculateTimeUntilNextPrayer();
-        });
-        startCountdown();
       }
     });
   }
