@@ -127,7 +127,7 @@ class _PrayerTimesPageState extends State<PrayerTimesPage> {
   }
 
   void startImageLoop() {
-    Timer.periodic(Duration(seconds: 5), (timer) {
+    Timer.periodic(Duration(seconds: 20), (timer) {
       setState(() {
         currentIndex = (currentIndex + 1) % imageUrls.length;
       });
